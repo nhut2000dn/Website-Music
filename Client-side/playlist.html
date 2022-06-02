@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/_reset.css">
+  <link rel="stylesheet" href="css/mycss.css">
+  <link rel="stylesheet" href="css/playlist.css">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/font-awesome-css/all.css">
+  <link rel="stylesheet" href="css/sweetalert2.css">
+
+  <script type="text/javascript" src="js/bootstrap.js"></script>
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/jquery.validate.js"></script>
+  <script type="text/javascript" src="js/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="js/sweetalert2.js"></script>
+  <script type="text/javascript" src="js/playlists.js"></script>
+</head>
+
+<body>
+  <div class="wrap">
+    <header class="navbar-header">
+      <div class="container">
+        <nav class="navbar-collapse">
+          <div class="navbar-left">
+            <a href="index.html"><img src="images/LOGO.png" alt="" class="logo"></a>
+          </div>
+          <div class="navbar-center">
+            <div class="navbar">
+              <a href="index.html">Home</a>
+              <div class="dropdown">
+                <button class="dropbtn">Top 100
+                </button>
+                <div class="dropdown-content">
+                  <div class="row">
+                    <div class="column-dropdown">
+                      <a href="#">U.S. UK</a>
+                      <a href="#">Asia</a>
+                      <a href="#">Instrumental Music</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <a href="artist.html">Artists</a>
+              <a href="theme.html">Theme</a>
+              <div class="dropdown">
+                <button class="dropbtn">Video
+                </button>
+                <div class="dropdown-content">
+                  <div class="row">
+                    <div class="column-dropdown">
+                      <h3>Asia</h3>
+                      <a href="#">Korean music</a>
+                      <a href="#">Chinese music</a>
+                      <a href="#">Japanese music</a>
+                      <a href="#">Thai music</a>
+                      <a href="#">The Best Of The 2019</a>
+                    </div>
+                    <div class="column-dropdown">
+                      <h3>U.S. UK</h3>
+                      <a href="#">Pop</a>
+                      <a href="#">Rock</a>
+                      <a href="#">Dance</a>
+                      <a href="#">Latin</a>
+                      <a href="#">The Best Of The 2018</a>
+                    </div>
+                    <div class="column-dropdown">
+                      <h3>Other</h3>
+                      <a href="#">Children's Music</a>
+                      <a href="#">Film Music</a>
+                      <a href="#">Acoustic</a>
+                      <a href="#">The Best Of The 2017</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <a href="playlist.html">PlayList</a>
+            </div>
+
+            <form class="input-group">
+              <span class="input-group-prepend">
+                <button type="button" class="button-seach">
+                  <svg class="feather feather-search" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                </button>
+              </span>
+              <span class="twitter-typeahead">
+                <input type="text" class="form-input-search" placeholder="Search..." autocomplete="off"
+                  spellcheck="false" dir="auto">
+              </span>
+            </form>
+          </div>
+          <div class="navbar-right">
+            <ul class="box-user">
+              <li><a href="Sign-up.html">Sign In</a></li>
+              <li><a href="login.html">Login In</a></li>
+            </ul>
+            <img src="https://avatar.talk.zdn.vn/default.jpg" alt="Zing MP3" class="icon-user">
+            <i class="fas fa-bars btn-action"></i>
+          </div>
+          <div class="box-action">
+            <div class="navbar">
+              <div class="dropdown">
+                <button class="dropbtn">Home
+                </button>
+              </div>
+              <div class="dropdown">
+                <button class="dropbtn">Top 100
+                </button>
+                <div class="dropdown-content">
+                  <div class="row">
+                    <div class="column-dropdown">
+                      <a href="#">U.S. UK</a>
+                      <a href="#">Asia</a>
+                      <a href="#">Instrumental Music</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="dropdown">
+                <button class="dropbtn">Artists
+                </button>
+              </div>
+              <div class="dropdown">
+                <button class="dropbtn">Theme
+                </button>
+                <div class="dropdown-content">
+                  <div class="row">
+                    <div class="column-dropdown">
+                      <a href="#">Cover & Masup</a>
+                      <a href="#">Gym music</a>
+                      <a href="#">Dance Music</a>
+                      <a href="#">The Best Of The 2019</a>
+                    </div>
+                    <div class="column-dropdown">
+                      <a href="#">Coffe Tine</a>
+                      <a href="#">Mysterious Music</a>
+                      <a href="#">Children's Music</a>
+                      <a href="#">The Best Of The 2018</a>
+                    </div>
+                    <div class="column-dropdown">
+                      <a href="#">Revolution music</a>
+                      <a href="#">Rock Music</a>
+                      <a href="#">Film Music</a>
+                      <a href="#">Acoustic</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="dropdown">
+                <button class="dropbtn">Video
+                </button>
+                <div class="dropdown-content">
+                  <div class="row">
+                    <div class="column-dropdown">
+                      <h3>Asia</h3>
+                      <a href="#">Korean music</a>
+                      <a href="#">Chinese music</a>
+                      <a href="#">Japanese music</a>
+                      <a href="#">Thai music</a>
+                    </div>
+                    <div class="column-dropdown">
+                      <h3>U.S. UK</h3>
+                      <a href="#">Pop</a>
+                      <a href="#">Rock</a>
+                      <a href="#">Dance</a>
+                      <a href="#">Latin</a>
+                    </div>
+                    <div class="column-dropdown">
+                      <h3>Other</h3>
+                      <a href="#">Children's Music</a>
+                      <a href="#">Film Music</a>
+                      <a href="#">Acoustic</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="dropdown">
+                <button class="dropbtn">Albums
+                </button>
+                <div class="dropdown-content">
+                  <div class="row">
+                    <div class="column-dropdown">
+                      <a href="#">Recommend Music</a>
+                      <a href="#">Asia</a>
+                      <a href="#">U.S. UK</a>
+                      <a href="#">Symphony</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <form class="input-group">
+              <span class="input-group-prepend">
+                <button type="button" class="button-seach">
+                  <svg class="feather feather-search" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                </button>
+              </span>
+              <span class="twitter-typeahead">
+                <input type="text" class="form-input-search" placeholder="Search..." autocomplete="off"
+                  spellcheck="false" dir="auto">
+              </span>
+            </form>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <div class="main-page">
+      <div class="padding-page">
+        <div class="box-background slidess">
+          <div class="background background1"></div>
+        </div>
+        <div class="box-background slidess">
+          <div class="background background2"></div>
+        </div>
+        <div class="box-background slidess">
+          <div class="background background3"></div>
+        </div>
+        <div class="slideshow-container">
+          <div class="mySlides">
+            <h2>Amazing songs</h2>
+            <div class="box-text-slides">
+              <p>Tortor tristique in ut non mauris quam nibh mi at diam mauris
+                iaculis lobortis mauris pretium odio elementum felis nunc</p>
+            </div>
+            <a href="" class="btn-explore">Explore</a>
+          </div>
+          <div class="mySlides">
+            <h2>Bepop top charts</h2>
+            <div class="box-text-slides">
+              <p>Tellus urna eu tincidunt massa venenatis aenean arcu turpis rhoncus
+                porttitor sed molestie ac arcu integer blandit diam neque diam</p>
+            </div>
+            <a href="" class="btn-explore">Explore</a>
+          </div>
+          <div class="mySlides">
+            <h2>Find popular artist</h2>
+            <div class="box-text-slides">
+              <p>TTellus urna eu tincidunt massa venenatis aenean arcu turpis rhoncus
+                porttitor sed molestie ac arcu integer blandit diam neque diam</p>
+            </div>
+            <a href="" class="btn-explore">Explore</a>
+          </div>
+        </div>
+        <div style="text-align:center;position: relative;">
+          <span class="dot" onclick="currentSlide(1)"></span>
+          <span class="dot" onclick="currentSlide(2)"></span>
+          <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+      </div>
+      <div class="heading-topweek">
+        <div>
+          <div class="txt-new-song">Playlist</div>
+          <h3 class="txt-toptracks">Playlist Hot</h3>
+          <div class="bar-new-song container-playlist">          
+          </div>
+        </div>
+      </div>
+      <footer class="page-footer">
+        <div class="contailner">
+          <ul class="navigation-footer uppercase">
+            <li class="column">
+              <h3>About us</h3>
+              <ul class="column-item">
+                <li><a href="#">About MYMUSIC</a></li>
+                <li><a href="#">For the Record</a></li>
+                <li><a href="#">Friendly Links</a></li>
+              </ul>
+            </li>
+            <li class="column">
+              <h3>Community</h3>
+              <ul class="column-item">
+                <li><a href="#">For Artists</a></li>
+                <li><a href="#">The Developers</a></li>
+                <li><a href="#">Brand</a></li>
+                <li><a href="#">The Supplier</a></li>
+              </ul>
+            </li>
+            <li class="column">
+              <h3>Social connection</h3>
+              <ul class="column-item">
+                <li>
+                  <img src="images/facebook-24.png" alt="Facebook">
+                  <a href="#"><span>Facebook</span></a>
+                </li>
+                <li>
+                  <img src="images/google_plus-24.png" alt="Google+">
+                  <a href="#"><span>Google+</span></a>
+                </li>
+                <li>
+                  <img src="images/youtube-24.png" alt="Youtube">
+                  <a href="#"><span>Youtube</span></a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="copyright-design">
+          <div class="contailner">
+            <div class="border-copyright-design">
+              <p class="txt-copyright">© 2019 MYMUSIC AB</p>
+              <p class="txt-design">DESIGN BY NHUT</p>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+  <script src="js/myjs.js"></script>
+
+</body>

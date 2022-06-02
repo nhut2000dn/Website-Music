@@ -1,0 +1,35 @@
+body {
+  background-color: white;
+}
+
+table.member tbody td {
+  text-align: left;
+}
+
+a.submit-btn {
+  text-decoration: none;
+  border: 0;
+  background-color: #46f127;
+  border-radius: 3px 3px 3px 3px;
+  box-shadow: inset 0 -15px 30px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
+  font-family: cursive;
+  font-size: 16px;
+  color: #FFFFFF;
+  padding: 3px;
+  padding-bottom: 0.3em;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+a.btn-add {
+  margin-left: 6em;
+}
+
+td.name {
+  min-width: 175px;
+}
+
+td.url-name {
+  min-width: 175px;
+}

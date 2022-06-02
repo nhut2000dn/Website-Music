@@ -1,0 +1,52 @@
+.view{
+  background-color: rgba(0,0,0, .8);
+  width:100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  opacity: 1;
+  visibility: visible;
+  transition: all .5s;
+  }
+.modal__content{
+  width: 72.5%;
+  height: 65%;
+  background-color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2em;
+  border-radius: 1em;
+  opacity: 1;
+  visibility: visible;
+  transition: all .5s;
+}
+.modal__close{
+  color: #363636;
+  font-size: 2em;
+  position: absolute;
+  top: .5em;
+  right: 1em;
+}
+.modal__heading{
+  color: dodgerblue;
+  margin-bottom: 1em;
+}
+.modal__paragraph{
+  line-height: 1.5em;
+}
+.modal-open{
+  display: inline-block;
+  color: dodgerblue;
+  margin: 2em;
+}
+img.img-product {
+  width: 118px;
+}
+div.container-order-details {
+  overflow: auto;
+  height: 89%;
+}

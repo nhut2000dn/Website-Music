@@ -1,0 +1,282 @@
+CREATE TABLE `account` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`full_name` varchar(255) NOT NULL,
+	`username` varchar(255) NOT NULL,
+	`password` varchar(255) NOT NULL,
+	`email` varchar(255) NOT NULL,
+	`image` varchar(255),
+	`active_status` INT(2) NOT NULL,
+	`user_types_id` INT NOT NULL,
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `song` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`name` varchar(255) NOT NULL,
+	`url_name` varchar(255) NOT NULL,
+	`image` varchar(255),
+	`audio` varchar(255) NOT NULL,
+	`views` INT NOT NULL,
+	`dowloads` INT NOT NULL,
+	`artist_id` INT,
+	`theme_id` INT,
+	`account_id` INT NOT NULL,
+	`country_id` INT,
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `playlists` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`name` varchar(255) NOT NULL,
+	`url_name` varchar(255) NOT NULL,
+	`image` varchar(255),
+	`account_id` INT NOT NULL,
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `comment` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`content` varchar(1000) NOT NULL,
+	`account_id` INT NOT NULL,
+	`song_id` INT NOT NULL,
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `lyrics` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`content` varchar(50000) NOT NULL,
+	`song_id` INT NOT NULL,
+	`account_id` INT NOT NULL,
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `artist` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`name` varchar(255) NOT NULL,
+	`url_name` varchar(255) NOT NULL,
+	`image` varchar(255),
+	`description` varchar(1000),
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `theme` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`name` varchar(255) NOT NULL,
+	`url_name` varchar(255) NOT NULL,
+	`image` varchar(255) NOT NULL,
+	`description` varchar(1000),
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `playlists_songs` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`playlists_id` INT NOT NULL,
+	`song_id` INT NOT NULL,
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `country` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`name` varchar(255) NOT NULL,
+	`url_name` varchar(255) NOT NULL,
+	`image` varchar(255),
+	`description` varchar(1000),
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `user_types` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`user_position` varchar(255) NOT NULL,
+	`description` varchar(255),
+	PRIMARY KEY (`id`)
+);
+
+ALTER TABLE `account` ADD CONSTRAINT `account_fk0` FOREIGN KEY (`user_types_id`) REFERENCES `user_types`(`id`);
+
+ALTER TABLE `song` ADD CONSTRAINT `song_fk0` FOREIGN KEY (`artist_id`) REFERENCES `artist`(`id`);
+
+ALTER TABLE `song` ADD CONSTRAINT `song_fk1` FOREIGN KEY (`theme_id`) REFERENCES `theme`(`id`);
+
+ALTER TABLE `song` ADD CONSTRAINT `song_fk2` FOREIGN KEY (`account_id`) REFERENCES `account`(`id`);
+
+ALTER TABLE `song` ADD CONSTRAINT `song_fk3` FOREIGN KEY (`country_id`) REFERENCES `country`(`id`);
+
+ALTER TABLE `playlists` ADD CONSTRAINT `playlists_fk0` FOREIGN KEY (`account_id`) REFERENCES `account`(`id`);
+
+ALTER TABLE `comment` ADD CONSTRAINT `comment_fk0` FOREIGN KEY (`account_id`) REFERENCES `account`(`id`);
+
+ALTER TABLE `comment` ADD CONSTRAINT `comment_fk1` FOREIGN KEY (`song_id`) REFERENCES `song`(`id`);
+
+ALTER TABLE `lyrics` ADD CONSTRAINT `lyrics_fk0` FOREIGN KEY (`song_id`) REFERENCES `song`(`id`);
+
+ALTER TABLE `lyrics` ADD CONSTRAINT `lyrics_fk1` FOREIGN KEY (`account_id`) REFERENCES `account`(`id`);
+
+ALTER TABLE `playlists_songs` ADD CONSTRAINT `playlists_songs_fk0` FOREIGN KEY (`playlists_id`) REFERENCES `playlists`(`id`);
+
+ALTER TABLE `playlists_songs` ADD CONSTRAINT `playlists_songs_fk1` FOREIGN KEY (`song_id`) REFERENCES `song`(`id`);
+
+
+INSERT INTO `user_types` (`id`, `user_position`, `description`) VALUES ('1', 'Admin', 'Manager website\r\n');
+INSERT INTO `user_types` (`id`, `user_position`, `description`) VALUES ('2', 'Customers', 'search, listening music .....');
+
+INSERT INTO `account` (`id`, `full_name`, `username`, `password`, `email`, `image`, `active_status`, `user_types_id`) VALUES 
+(NULL, 'Nguyễn Hoàng Nhựt', 'Nhutpro92', '2000Nhutpro92', 'nhnhut.18it4@sict.udn.vn', '', '1', '1');
+INSERT INTO `account` (`id`, `full_name`, `username`, `password`, `email`, `image`, `active_status`, `user_types_id`) VALUES 
+(NULL, 'Hoàng Thanh Tùng', 'Tung2000dn', '2000Tungpro92', 'httung18it4@sict.udn.vn', '', '1', '1');
+INSERT INTO `account` (`id`, `full_name`, `username`, `password`, `email`, `image`, `active_status`, `user_types_id`) VALUES 
+(NULL, 'Hoàng Minh Bình', 'Binh2000dn', '2000Binhpro92', 'binh18it4@sict.udn.vn', '', '1', '2');
+
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Alan Walker', 'alan-walker', 'Alan-walker.jpg', 'Alan Olav Walker (born 24 August 1997) is a British-born Norwegian DJ and record producer. He is best 
+known for his 2015 single \"Faded\" which received diamond certifications in Germany and Poland and multi-platinum certifications in over 10 countries including 
+the US and the UK.');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Sơn Tùng MTP', 'son-tung-mtp', 'Son-Tung-MTP.jpg', 'Nguyễn Thanh Tùng hay được biết đến với nghệ danh Sơn Tùng M-TP (sinh ngày 5 tháng 7 năm 1994) là một nam 
+ca sĩ, nhạc sĩ và diễn viên người Việt Nam. Các đĩa đơn năm 2012 và 2013 của anh, \"Cơn mưa ngang qua\" và \"Em của ngày hôm qua\" đã đánh dấu mốc khởi đầu cho sự 
+nghiệp của anh.');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Adam Levine', 'adam-levine', 'Adam-Levine.jpg', 'Adam Noah Levine (born March 18, 1979) is an American singer, songwriter and actor. He is the lead singer for 
+the pop rock band Maroon 5. Born and raised in Los Angeles, California, Levine began his musical career in 1994, when he co-founded the band Kara\'s Flowers, of which 
+he was the lead vocalist and guitarist.');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Amme', 'amme', 'Amme.jpg', 'Tiểu sử Amee đầy đủ và chi tiết nhất: chiều cao, cân nặng, gia thế: cô Ca sỹ Amee này có tên thật là Trần Huyền My, sinh ngày 
+23/3/2000 tại Hà Nội. Không chỉ gây chú ý bởi ngoại hình xinh đẹp như idol Hàn Quốc, cô bạn còn sở hữu giọng hát rất ngọt cùng khả năng vũ đạo cực kì ổn. Không ít 
+người dự đoán rằng cô nàng sẽ là một trong những gương mặt gây sốt trong thời gian sắp tới.');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Anh Quân', 'anh-quan', 'Anh-Quan.jpg', 'Ca sĩ Anh Quân Idol sinh ra trong một gia đình có truyền thống bố là bộ đội kháng chiến chống Mỹ, mẹ là y tá quân y, 
+sống ở một thị xã thuộc ngoại thành Hà Nội. Gia đình không có ai theo nghệ thuật. Anh dự thi vào trường Nhạc Viện Hà Nội năm 2006.');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Avicii', 'avicii', 'Avicii.jpg', 'Avicii. Tim Bergling (Swedish: [tɪm ²bærjlɪŋ]; 8 September 1989 – 20 April 2018), known professionally as Avicii 
+(/əˈviːtʃi/), was a Swedish musician, DJ, remixer, and record producer. At 16, Bergling began posting his remixes on electronic music forums, which led to his 
+first record deal.');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Bích Phương', 'bich-phuong', 'Bich-Phuong.jpg', 'Bích Phương, tên đầy đủ là Bùi Bích Phương (sinh ngày 30 tháng 9 năm 1989) là nữ ca sĩ người Việt Nam. 
+Cô được biết đến khi dự thi chương trình Vietnam Idol 2010. Bích Phương bước chân vào con đường âm nhạc sau cuộc thi Vietnam Idol. ... Cô cũng là nữ ca sĩ đầu 
+tiên đạt 1 triệu subscribe trên trang Youtube cá nhân.');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES (NULL, 'Deamn', 'deamn', 'Deamn.jpg', NULL);
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'DJ Snake', 'dj-snake', 'DJ-Snake.jpg', 'DJ Snake. William Grigahcine, better known by his stage name DJ Snake, is a French DJ and producer mixing hip hop 
+and electronic music.He is a Grammy-nominated producer and artist who debuted into the international scene with singles \"Bird Machine\" and \"Turn Down For What\" 
+in 2013.');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES (NULL, 'Hoa Vinh', 'hoa-vinh', 'Hoa-Vinh.jpg', NULL);
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Jack', 'jack', 'Jack.jpg', 'Hiện Jack (tên thật: Trịnh Trần Phương) đang bị chỉ trích \'chảnh\' trong chương trình Giọng ải giọng ai, từ chối chung 
+show với Quân A.Q. Ca sĩ Jack là ai? Jacktên thật là Trịnh Trần Phương Tuấn, sinh năm 1997, quê ở Bến Tre. Theo chia sẻ, trước đây Jack từng là giáo viên dạy âm 
+nhạc của một trường Tiểu học');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Kha', 'kha', 'Kha.jpg', 'Sau 2 tuần phát hành trên Zing MP3, bản audio thu hút hơn 4 triệu lượt nghe. Kha (tên thật Nguyễn Minh Kha, sinh năm 2002) 
+hiện là học sinh lớp 12 tại An Giang. Cậu yêu thích dòng nhạc R&B và tập tành viết nhạc khi chỉ mới học lớp 7');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Khalid', 'khalid', 'Khalid.jpg', 'Khalid Donnel Robinson (born February 11, 1998) is an American singer and songwriter. ... His debut single, \"Location\", 
+was released in July 2016 and peaked at number 16 on the US Billboard Hot 100 chart and was later certified quadruple platinum by the Recording Industry Association 
+of America (RIAA).');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Magic', 'magic', 'Magic.jpg', 'Magic is the power to use supernatural forces to make impossible things happen, such as making people disappear or 
+controlling events in nature. ... You can use magic when you are referring to an event that is so wonderful, strange, or unexpected that it seems as if supernatural 
+powers have caused it.');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Martin Jensen', 'martin-jensen', 'Martin-Jensen.jpg', 'Martin Jensen (born 29 September 1991) is a Danish DJ and record producer best known for the 2016 
+single \"Solo Dance\". His videos feature sounds sampled from viral videos and made into tropical house mixes. He has over 10 years of experience of being club DJ, 
+in Sunny Beach.');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES (NULL, 'Nhật Phong', 'nhat-phong', 'Nhat-Phong.jpg', NULL);
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Osad', 'osad', 'Osad.jpg', 'Người Âm Phủ Osad tên thật là Mai Quang Nam, sinh năm 1997, nghĩa là năm nay mới chỉ 21 tuổi. Điều bất ngờ hơn nữa là chuyên 
+ngành của Osad hoàn toàn không liên quan gì đến âm nhạc hay nghệ thuật. Anh chàng hiện đang theo học tại trường Đại học Bách Khoa – một trường đại học vô cùng danh giá, 
+đứng top đầu tại Hà Nội.');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Tones', 'tones', 'Tones.jpg', 'Definition of Tone. Tone, in written composition, is an attitude of a writer toward a subject or an audience. ... The manner 
+in which a writer approaches this theme and subject is the tone. The tone can be formal, informal, serious, comic, sarcastic, sad, or cheerful, or it may be any other 
+existing attitude.');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Trung Tự', 'trung-tu', 'Trung-Tu.jpg', 'Trung Tự sinh năm 1992, tên thật là Nguyễn Trung Tự, được biết đến là một nam ca sĩ trẻ hát rất thành công thể loại 
+nhạc Rap được đông đảo khán giả biết đến và yêu mến.');
+
+INSERT INTO `country` (`id`, `name`, `url_name`, `image`, `description`) VALUES (NULL, 'Việt Nam', 'viet-nam', 'Viet-Nam.jpg', NULL);
+INSERT INTO `country` (`id`, `name`, `url_name`, `image`, `description`) VALUES (NULL, 'U.S. UK', 'u.s.-uk', 'U.S.-UK.jpg', NULL);
+INSERT INTO `country` (`id`, `name`, `url_name`, `image`, `description`) VALUES (NULL, 'Japan', 'japan', 'Japan.jpg', NULL);
+INSERT INTO `country` (`id`, `name`, `url_name`, `image`, `description`) VALUES (NULL, 'Korea', 'korea', 'Korea.jpg', NULL);
+INSERT INTO `country` (`id`, `name`, `url_name`, `image`, `description`) VALUES (NULL, 'China', 'china', 'China.jpg', NULL);
+INSERT INTO `country` (`id`, `name`, `url_name`, `image`, `description`) VALUES (NULL, 'Laos', 'laos', 'Laos.jpg', NULL);
+
+INSERT INTO `theme` (`id`, `name`, `url_name`, `image`, `description`) VALUES (NULL, 'American Music Hot', 'american-music-hot', 'American-Music-Hot.jpg', NULL);
+INSERT INTO `theme` (`id`, `name`, `url_name`, `image`, `description`) VALUES (NULL, 'Audiophile', 'audiophile', 'Audiophile.jpg', NULL);
+INSERT INTO `theme` (`id`, `name`, `url_name`, `image`, `description`) VALUES (NULL, 'Film', 'film', 'Film.jpg', NULL);
+INSERT INTO `theme` (`id`, `name`, `url_name`, `image`, `description`) VALUES (NULL, 'Gym', 'gym', 'Gym.jpg', NULL);
+INSERT INTO `theme` (`id`, `name`, `url_name`, `image`, `description`) VALUES (NULL, 'Korean Music Hot', 'korean-music-hot', 'Korean-Music-Hot.jpg', NULL);
+INSERT INTO `theme` (`id`, `name`, `url_name`, `image`, `description`) VALUES (NULL, 'Piano', 'piano', 'Piano.jpg', NULL);
+INSERT INTO `theme` (`id`, `name`, `url_name`, `image`, `description`) VALUES (NULL, 'Vietnamese Hot', 'vietnamese-hot', 'Vietnamese-Hot.jpg', NULL);
+
+INSERT INTO `song` (`id`, `name`, `url_name`, `image`, `audio`, `views`, `dowloads`, `artist_id`, `theme_id`, `account_id`, `country_id`) VALUES 
+(NULL, 'Rude', 'rude', 'Rude.jpg', 'Rude.mp3', '0', '0', '14', '1', '1', '2');
+INSERT INTO `song` (`id`, `name`, `url_name`, `image`, `audio`, `views`, `dowloads`, `artist_id`, `theme_id`, `account_id`, `country_id`) VALUES 
+(NULL, 'Taki Taki', 'taki-taki', 'Taki-Taki.jpg', 'Taki-Taki.mp3', '0', '0', '9', '1', '1', '2');
+INSERT INTO `song` (`id`, `name`, `url_name`, `image`, `audio`, `views`, `dowloads`, `artist_id`, `theme_id`, `account_id`, `country_id`) VALUES 
+(NULL, 'Solo Dance', 'solo-dance', 'Solo-Dance.jpg', 'Solo-Dance.mp3', '0', '0', '15', '1', '1', '2');
+INSERT INTO `song` (`id`, `name`, `url_name`, `image`, `audio`, `views`, `dowloads`, `artist_id`, `theme_id`, `account_id`, `country_id`) VALUES 
+(NULL, 'Wake Me Up', 'wake-me-up', 'Wake-Me-Up.jpg', 'Wake-Me-Up.mp3', '0', '0', '6', '1', '1', '2');
+INSERT INTO `song` (`id`, `name`, `url_name`, `image`, `audio`, `views`, `dowloads`, `artist_id`, `theme_id`, `account_id`, `country_id`) VALUES 
+(NULL, 'Waiting For Love', 'waiting-for-love', 'Waiting-For-Love.jpg', 'Waiting-For-Love.mp3', '0', '0', '6', '1', '1', '2');
+INSERT INTO `song` (`id`, `name`, `url_name`, `image`, `audio`, `views`, `dowloads`, `artist_id`, `theme_id`, `account_id`, `country_id`) VALUES 
+(NULL, 'Lily', 'lily', 'Lily.jpg', 'Lily.mp3', '0', '0', '1', '1', '1', '2');
+INSERT INTO `song` (`id`, `name`, `url_name`, `image`, `audio`, `views`, `dowloads`, `artist_id`, `theme_id`, `account_id`, `country_id`) VALUES 
+(NULL, 'One More Night', 'one-more-night', 'One-More-Night.jpg', 'One-More-Night.mp3', '0', '0', '3', '1', '1', '2');
+INSERT INTO `song` (`id`, `name`, `url_name`, `image`, `audio`, `views`, `dowloads`, `artist_id`, `theme_id`, `account_id`, `country_id`) VALUES 
+(NULL, 'Sugar', 'sugar', 'Sugar.jpg', 'Sugar.mp3', '0', '0', '3', '1', '1', '2');
+INSERT INTO `song` (`id`, `name`, `url_name`, `image`, `audio`, `views`, `dowloads`, `artist_id`, `theme_id`, `account_id`, `country_id`) VALUES 
+(NULL, 'Maps', 'maps', 'Maps.jpg', 'Maps.mp3', '0', '0', '3', '1', '1', '2');
+INSERT INTO `song` (`id`, `name`, `url_name`, `image`, `audio`, `views`, `dowloads`, `artist_id`, `theme_id`, `account_id`, `country_id`) VALUES 
+(NULL, 'On My Way', 'on-my-way', 'On-My-Way.jpg', 'On-My-Way.mp3', '0', '0', '1', '1', '1', '2');
+INSERT INTO `song` (`id`, `name`, `url_name`, `image`, `audio`, `views`, `dowloads`, `artist_id`, `theme_id`, `account_id`, `country_id`) VALUES 
+(NULL, 'Đen Đá Không Đường', 'den-da-khong-duong', 'Den-Da-Khong-Duong.jpg', 'Den-Da-Khong-Duong.mp3', '0', '0', '4', '7', '1', '1');
+INSERT INTO `song` (`id`, `name`, `url_name`, `image`, `audio`, `views`, `dowloads`, `artist_id`, `theme_id`, `account_id`, `country_id`) VALUES 
+(NULL, 'Tướng Quân', 'tuong-quan', 'Tuong-Quan.jpg', 'Tuong-Quan', '0', '0', '16', '7', '1', '1');
+INSERT INTO `song` (`id`, `name`, `url_name`, `image`, `audio`, `views`, `dowloads`, `artist_id`, `theme_id`, `account_id`, `country_id`) VALUES 
+(NULL, 'Còn Gì Đau Hơn Chữ Đã Từng', 'con-gi-dau-hon-chu-da-tung', 'Con-Gi-Dau-Hon-Chu-Da-Tung.jpg', 'Con-Gi-Dau-Hon-Chu-Da-Tung.mp3', '0', '0', '5', '7', '1', '1');
+INSERT INTO `song` (`id`, `name`, `url_name`, `image`, `audio`, `views`, `dowloads`, `artist_id`, `theme_id`, `account_id`, `country_id`) VALUES 
+(NULL, 'Bao Giờ Lấy Chồng', 'bao-gio-lay-chong', 'Bao-Gio-Lay-Chong.jpg', 'Bao-Gio-Lay-Chong.mp3', '0', '0', '7', '7', '1', '1');
+INSERT INTO `song` (`id`, `name`, `url_name`, `image`, `audio`, `views`, `dowloads`, `artist_id`, `theme_id`, `account_id`, `country_id`) VALUES 
+(NULL, 'Save Me', 'save-me', 'Save-Me.jpg', 'Save-Me.mp3', '0', '0', '8', '1', '1', '2');
+INSERT INTO `song` (`id`, `name`, `url_name`, `image`, `audio`, `views`, `dowloads`, `artist_id`, `theme_id`, `account_id`, `country_id`) VALUES 
+(NULL, 'Dừng Lại Đây Thôi', 'dung-lai-day-thoi', 'Dung-Lai-Day-Thoi.jpg', 'Dung-Lai-Day-Thoi.mp3', '0', '0', '10', '7', '1', '1');
+INSERT INTO `song` (`id`, `name`, `url_name`, `image`, `audio`, `views`, `dowloads`, `artist_id`, `theme_id`, `account_id`, `country_id`) VALUES 
+(NULL, 'Sóng Gió', 'song-gio', 'Song-Gio.jpg', 'Song-Gio.mp3', '0', '0', '11', '7', '1', '1');
+INSERT INTO `song` (`id`, `name`, `url_name`, `image`, `audio`, `views`, `dowloads`, `artist_id`, `theme_id`, `account_id`, `country_id`) VALUES 
+(NULL, 'Bạc Phận', 'bac-phan', 'Bac-Phan.jpg', 'Bac-Phan.mp3', '0', '0', '11', '7', '1', '1');
+INSERT INTO `song` (`id`, `name`, `url_name`, `image`, `audio`, `views`, `dowloads`, `artist_id`, `theme_id`, `account_id`, `country_id`) VALUES 
+(NULL, 'Lời Yêu Ngay Dại', 'loi-yeu-ngay-dai', 'Loi-Yeu-Ngay-Dai.jpg', 'Loi-Yeu-Ngay-Dai.mp3', '0', '0', '12', '7', '1', '1');
+INSERT INTO `song` (`id`, `name`, `url_name`, `image`, `audio`, `views`, `dowloads`, `artist_id`, `theme_id`, `account_id`, `country_id`) VALUES 
+(NULL, 'Young Dumb & Broke', 'young-dumb-and-broke', 'Young-Dumb-&-Broke.jpg', 'Young-Dumb-&-Broke.mp3', '0', '0', '13', '1', '1', '2');
+INSERT INTO `song` (`id`, `name`, `url_name`, `image`, `audio`, `views`, `dowloads`, `artist_id`, `theme_id`, `account_id`, `country_id`) VALUES 
+(NULL, 'Người Âm Phủ', 'nguoi-am-phu', 'Nguoi-Am-Phu.jpg', 'Nguoi-Am-Phu.mp3', '0', '0', '17', '7', '1', '1');
+INSERT INTO `song` (`id`, `name`, `url_name`, `image`, `audio`, `views`, `dowloads`, `artist_id`, `theme_id`, `account_id`, `country_id`) VALUES 
+(NULL, 'Như Ngày Hôm Qua', 'nhu-ngay-hom-qua', 'Nhu-Ngay-Hom-Qua.jpg', 'Nhu-Ngay-Hom-Qua.mp3', '0', '0', '2', '7', '1', '1');
+INSERT INTO `song` (`id`, `name`, `url_name`, `image`, `audio`, `views`, `dowloads`, `artist_id`, `theme_id`, `account_id`, `country_id`) VALUES 
+(NULL, 'Dance Mokey', 'dance-monkey', 'Dance-Monkey.jpg', 'Dance-Monkey.mp3', '0', '0', '18', '1', '1', '2');
+INSERT INTO `song` (`id`, `name`, `url_name`, `image`, `audio`, `views`, `dowloads`, `artist_id`, `theme_id`, `account_id`, `country_id`) VALUES 
+(NULL, 'Váy Cưới', 'vay-cuoi', 'Vay-Cuoi.jpg', 'Vay-Cuoi.mp3', '0', '0', '19', '7', '1', '1');
+
+INSERT INTO `playlists` (`id`, `name`, `url_name`, `image`, `account_id`) VALUES (NULL, 'U.S. UK', 'u.s.-uk', 'U.S.-UK.jpg', '1');
+INSERT INTO `playlists` (`id`, `name`, `url_name`, `image`, `account_id`) VALUES (NULL, 'Top EDM', 'top-edm', 'Top-EDM.jpg', '1');
+INSERT INTO `playlists` (`id`, `name`, `url_name`, `image`, `account_id`) VALUES (NULL, 'Kpop Mix', 'kpop-mix', 'Kpop-Mix.jpg', '1');
+INSERT INTO `playlists` (`id`, `name`, `url_name`, `image`, `account_id`) VALUES (NULL, 'Hot V Pop', 'hot-v-pop', 'Hot-V-Pop.jpg', '1');
+INSERT INTO `playlists` (`id`, `name`, `url_name`, `image`, `account_id`) VALUES (NULL, 'Gamming', 'gamming', 'Gamming.jpg', '1');
+INSERT INTO `playlists` (`id`, `name`, `url_name`, `image`, `account_id`) VALUES (NULL, 'Avenger', 'avenger', 'Avenger.jpg', '1');
+INSERT INTO `playlists` (`id`, `name`, `url_name`, `image`, `account_id`) VALUES (NULL, '4 AM', '4-am', '4-AM.jpg', '1');
+
+INSERT INTO `playlists_songs` (`id`, `playlists_id`, `song_id`) VALUES (NULL, '1', '23');
+INSERT INTO `playlists_songs` (`id`, `playlists_id`, `song_id`) VALUES (NULL, '1', '6');
+INSERT INTO `playlists_songs` (`id`, `playlists_id`, `song_id`) VALUES (NULL, '1', '9');
+INSERT INTO `playlists_songs` (`id`, `playlists_id`, `song_id`) VALUES (NULL, '1', '7');
+INSERT INTO `playlists_songs` (`id`, `playlists_id`, `song_id`) VALUES (NULL, '1', '10');
+INSERT INTO `playlists_songs` (`id`, `playlists_id`, `song_id`) VALUES (NULL, '1', '1');
+INSERT INTO `playlists_songs` (`id`, `playlists_id`, `song_id`) VALUES (NULL, '1', '15');
+INSERT INTO `playlists_songs` (`id`, `playlists_id`, `song_id`) VALUES (NULL, '1', '3');
+INSERT INTO `playlists_songs` (`id`, `playlists_id`, `song_id`) VALUES (NULL, '1', '8');
+INSERT INTO `playlists_songs` (`id`, `playlists_id`, `song_id`) VALUES (NULL, '1', '2');
+INSERT INTO `playlists_songs` (`id`, `playlists_id`, `song_id`) VALUES (NULL, '1', '5');
+INSERT INTO `playlists_songs` (`id`, `playlists_id`, `song_id`) VALUES (NULL, '1', '4');
+INSERT INTO `playlists_songs` (`id`, `playlists_id`, `song_id`) VALUES (NULL, '1', '20');
+
+
+INSERT INTO `lyrics` (`id`, `content`, `song_id`, `account_id`) VALUES (NULL, 'Saturday morning jumped out of bed_\r\nAnd put on my best suit_\r\nGot in my car and raced like a jet_\r\nAll the way to you_\r\nKnocked on your door with heart in my hand_\r\nTo ask you a question_\r\n\'Cause I know that you\'re an old-fashioned man, yeah__\r\nCan I have your daughter for the rest of my life?_\r\nSay yes, say yes \'cause I need to know_\r\nYou say I\'ll never get your blessing \'til the day I die_\r\nTough luck, my friend, but the answer is \'No\'__\r\nWhy you gotta be so rude?_\r\nDon\'t you know I\'m human too?_\r\nWhy you gotta be so rude?_\r\nI\'m gonna marry her anyway__\r\nMarry that girl_\r\nMarry her anyway_\r\nMarry that girl_\r\nYeah, no matter what you say_\r\nMarry that girl_\r\nAnd we\'ll be a family_\r\nWhy you gotta be so_\r\nRude__\r\nI hate to do this, you leave no choice_\r\nCan\'t live without her_\r\nLove me or hate me we will be boys_\r\nStanding at that altar_\r\nOr we will run away_\r\nTo another galaxy, you know_\r\nYou know she\'s in love with me_\r\nShe will go anywhere I go__\r\nCan I have your daughter for the rest of my life?_\r\nSay yes, say yes \'cause I need to know_\r\nYou say I\'ll never get your blessing \'til the day I die_\r\nTough luck, my friend, \'cause the answer\'s still \'No\"__\r\nWhy you gotta be so rude?_\r\nDon\'t you know I\'m human too?_\r\nWhy you gotta be so rude?_\r\nI\'m gonna marry her anyway__\r\nMarry that girl_\r\nMarry her anyway_\r\nMarry that girl_\r\nNo matter what you say_\r\nMarry that girl_\r\nAnd we\'ll be a family_\r\nWhy you gotta be so_\r\nRude_\r\nRude__\r\nCan I have your daughter for the rest of my life?_\r\nSay yes, say yes \'cause I need to know_\r\nYou say, I\'ll never get your blessing \'til the day I die_\r\nTough luck, my friend, but \'No\' still means \'No\'!__\r\nWhy you gotta be so rude?_\r\nDon\'t you know I\'m human too?_\r\nWhy you gotta be so rude?_\r\nI\'m gonna marry her anyway__\r\nMarry that girl_\r\nMarry her anyway_\r\nMarry that girl_\r\nNo matter what you say_\r\nMarry that girl_\r\nAnd we\'ll be a family_\r\nWhy you gotta be so_\r\nRude_\r\nWhy you gotta be so_\r\nRude_\r\nWhy you gotta be so rude?_', '1', '1');
+

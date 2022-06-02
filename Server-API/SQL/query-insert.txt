@@ -1,0 +1,200 @@
+CREATE TABLE `account` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`full_name` varchar(255) NOT NULL,
+	`username` varchar(255) NOT NULL,
+	`password` varchar(255) NOT NULL,
+	`email` varchar(255) NOT NULL,
+	`image` varchar(255),
+	`active_status` INT(2) NOT NULL,
+	`user_types_id` INT NOT NULL,
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `song` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`name` varchar(255) NOT NULL,
+	`url_name` varchar(255) NOT NULL,
+	`image` varchar(255),
+	`views` INT NOT NULL,
+	`dowloads` INT NOT NULL,
+	`artist_id` INT NOT NULL,
+	`theme_id` INT NOT NULL,
+	`lyrics_id` INT NOT NULL,
+	`account_id` INT NOT NULL,
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `albums` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`name` varchar(255) NOT NULL,
+	`image` varchar(255),
+	`artist_id` INT NOT NULL,
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `playlists` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`name` varchar(255) NOT NULL,
+	`image` varchar(255),
+	`account_id` INT NOT NULL,
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `comment` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`content` varchar(1000) NOT NULL,
+	`account_id` INT NOT NULL,
+	`song_id` INT NOT NULL,
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `user_types` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`user_position` varchar(255) NOT NULL,
+	`description` varchar(255),
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `lyrics` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`content` varchar(50000) NOT NULL,
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `artist` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`name` varchar(255) NOT NULL,
+	`url_name` varchar(255) NOT NULL,
+	`image` varchar(255),
+	`description` varchar(1000),
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `theme` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`name` varchar(255) NOT NULL,
+	`image` varchar(255) NOT NULL,
+	`url_name` varchar(255) NOT NULL,
+	`description` varchar(1000),
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `playlists_songs` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`playlists_id` INT NOT NULL,
+	`song_id` INT NOT NULL,
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `albums_songs` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`song_id` INT NOT NULL,
+	`albums_id` INT NOT NULL,
+	PRIMARY KEY (`id`)
+);
+
+ALTER TABLE `account` ADD CONSTRAINT `account_fk0` FOREIGN KEY (`user_types_id`) REFERENCES `user_types`(`id`);
+
+ALTER TABLE `song` ADD CONSTRAINT `song_fk0` FOREIGN KEY (`artist_id`) REFERENCES `artist`(`id`);
+
+ALTER TABLE `song` ADD CONSTRAINT `song_fk1` FOREIGN KEY (`theme_id`) REFERENCES `theme`(`id`);
+
+ALTER TABLE `song` ADD CONSTRAINT `song_fk2` FOREIGN KEY (`lyrics_id`) REFERENCES `lyrics`(`id`);
+
+ALTER TABLE `song` ADD CONSTRAINT `song_fk3` FOREIGN KEY (`account_id`) REFERENCES `account`(`id`);
+
+ALTER TABLE `albums` ADD CONSTRAINT `albums_fk0` FOREIGN KEY (`artist_id`) REFERENCES `artist`(`id`);
+
+ALTER TABLE `playlists` ADD CONSTRAINT `playlists_fk0` FOREIGN KEY (`account_id`) REFERENCES `account`(`id`);
+
+ALTER TABLE `comment` ADD CONSTRAINT `comment_fk0` FOREIGN KEY (`account_id`) REFERENCES `account`(`id`);
+
+ALTER TABLE `comment` ADD CONSTRAINT `comment_fk1` FOREIGN KEY (`song_id`) REFERENCES `song`(`id`);
+
+ALTER TABLE `playlists_songs` ADD CONSTRAINT `playlists_songs_fk0` FOREIGN KEY (`playlists_id`) REFERENCES `playlists`(`id`);
+
+ALTER TABLE `playlists_songs` ADD CONSTRAINT `playlists_songs_fk1` FOREIGN KEY (`song_id`) REFERENCES `song`(`id`);
+
+ALTER TABLE `albums_songs` ADD CONSTRAINT `albums_songs_fk0` FOREIGN KEY (`song_id`) REFERENCES `song`(`id`);
+
+ALTER TABLE `albums_songs` ADD CONSTRAINT `albums_songs_fk1` FOREIGN KEY (`albums_id`) REFERENCES `albums`(`id`);
+
+
+
+
+
+
+INSERT INTO `user_types` (`id`, `user_position`, `description`) VALUES ('1', 'Admin', 'Manager website\r\n');
+INSERT INTO `user_types` (`id`, `user_position`, `description`) VALUES ('2', 'Customers', 'search, listening music .....');
+
+INSERT INTO `account` (`id`, `full_name`, `username`, `password`, `email`, `image`, `active_status`, `user_types_id`) VALUES 
+(NULL, 'Nguyễn Hoàng Nhựt', 'Nhutpro92', '2000Nhutpro92', 'nhnhut.18it4@sict.udn.vn', '', '1', '1');
+INSERT INTO `account` (`id`, `full_name`, `username`, `password`, `email`, `image`, `active_status`, `user_types_id`) VALUES 
+(NULL, 'Hoàng Thanh Tùng', 'Tung2000dn', '2000Tungpro92', 'httung18it4@sict.udn.vn', '', '1', '1');
+INSERT INTO `account` (`id`, `full_name`, `username`, `password`, `email`, `image`, `active_status`, `user_types_id`) VALUES 
+(NULL, 'Hoàng Minh Bình', 'Binh2000dn', '2000Binhpro92', 'binh18it4@sict.udn.vn', '', '1', '2');
+
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Alan Walker', 'alan-walker', 'Alan-walker.jpg', 'Alan Olav Walker (born 24 August 1997) is a British-born Norwegian DJ and record producer. He is best 
+known for his 2015 single \"Faded\" which received diamond certifications in Germany and Poland and multi-platinum certifications in over 10 countries including 
+the US and the UK.');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Sơn Tùng MTP', 'son-tung-mtp', 'Son-Tung-MTP.jpg', 'Nguyễn Thanh Tùng hay được biết đến với nghệ danh Sơn Tùng M-TP (sinh ngày 5 tháng 7 năm 1994) là một nam 
+ca sĩ, nhạc sĩ và diễn viên người Việt Nam. Các đĩa đơn năm 2012 và 2013 của anh, \"Cơn mưa ngang qua\" và \"Em của ngày hôm qua\" đã đánh dấu mốc khởi đầu cho sự 
+nghiệp của anh.');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Adam Levine', 'adam-levine', 'Adam-Levine.jpg', 'Adam Noah Levine (born March 18, 1979) is an American singer, songwriter and actor. He is the lead singer for 
+the pop rock band Maroon 5. Born and raised in Los Angeles, California, Levine began his musical career in 1994, when he co-founded the band Kara\'s Flowers, of which 
+he was the lead vocalist and guitarist.');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Amme', 'amme', 'Amme.jpg', 'Tiểu sử Amee đầy đủ và chi tiết nhất: chiều cao, cân nặng, gia thế: cô Ca sỹ Amee này có tên thật là Trần Huyền My, sinh ngày 
+23/3/2000 tại Hà Nội. Không chỉ gây chú ý bởi ngoại hình xinh đẹp như idol Hàn Quốc, cô bạn còn sở hữu giọng hát rất ngọt cùng khả năng vũ đạo cực kì ổn. Không ít 
+người dự đoán rằng cô nàng sẽ là một trong những gương mặt gây sốt trong thời gian sắp tới.');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Anh Quân', 'anh-quan', 'Anh-Quan.jpg', 'Ca sĩ Anh Quân Idol sinh ra trong một gia đình có truyền thống bố là bộ đội kháng chiến chống Mỹ, mẹ là y tá quân y, 
+sống ở một thị xã thuộc ngoại thành Hà Nội. Gia đình không có ai theo nghệ thuật. Anh dự thi vào trường Nhạc Viện Hà Nội năm 2006.');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Avicii', 'avicii', 'Avicii.jpg', 'Avicii. Tim Bergling (Swedish: [tɪm ²bærjlɪŋ]; 8 September 1989 – 20 April 2018), known professionally as Avicii 
+(/əˈviːtʃi/), was a Swedish musician, DJ, remixer, and record producer. At 16, Bergling began posting his remixes on electronic music forums, which led to his 
+first record deal.');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Bích Phương', 'bich-phuong', 'Bich-Phuong.jpg', 'Bích Phương, tên đầy đủ là Bùi Bích Phương (sinh ngày 30 tháng 9 năm 1989) là nữ ca sĩ người Việt Nam. 
+Cô được biết đến khi dự thi chương trình Vietnam Idol 2010. Bích Phương bước chân vào con đường âm nhạc sau cuộc thi Vietnam Idol. ... Cô cũng là nữ ca sĩ đầu 
+tiên đạt 1 triệu subscribe trên trang Youtube cá nhân.');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES (NULL, 'Deamn', 'deamn', 'Deamn.jpg', NULL);
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'DJ Snake', 'dj-snake', 'DJ-Snake.jpg', 'DJ Snake. William Grigahcine, better known by his stage name DJ Snake, is a French DJ and producer mixing hip hop 
+and electronic music.He is a Grammy-nominated producer and artist who debuted into the international scene with singles \"Bird Machine\" and \"Turn Down For What\" 
+in 2013.');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES (NULL, 'Hoa Vinh', 'hoa-vinh', 'Hoa-Vinh.jpg', NULL);
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Jack', 'jack', 'Jack.jpg', 'Hiện Jack (tên thật: Trịnh Trần Phương) đang bị chỉ trích \'chảnh\' trong chương trình Giọng ải giọng ai, từ chối chung 
+show với Quân A.Q. Ca sĩ Jack là ai? Jacktên thật là Trịnh Trần Phương Tuấn, sinh năm 1997, quê ở Bến Tre. Theo chia sẻ, trước đây Jack từng là giáo viên dạy âm 
+nhạc của một trường Tiểu học');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Kha', 'kha', 'Kha.jpg', 'Sau 2 tuần phát hành trên Zing MP3, bản audio thu hút hơn 4 triệu lượt nghe. Kha (tên thật Nguyễn Minh Kha, sinh năm 2002) 
+hiện là học sinh lớp 12 tại An Giang. Cậu yêu thích dòng nhạc R&B và tập tành viết nhạc khi chỉ mới học lớp 7');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Khalid', 'khalid', 'Khalid.jpg', 'Khalid Donnel Robinson (born February 11, 1998) is an American singer and songwriter. ... His debut single, \"Location\", 
+was released in July 2016 and peaked at number 16 on the US Billboard Hot 100 chart and was later certified quadruple platinum by the Recording Industry Association 
+of America (RIAA).');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Magic', 'magic', 'Magic.jpg', 'Magic is the power to use supernatural forces to make impossible things happen, such as making people disappear or 
+controlling events in nature. ... You can use magic when you are referring to an event that is so wonderful, strange, or unexpected that it seems as if supernatural 
+powers have caused it.');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Martin Jensen', 'martin-jensen', 'Martin-Jensen.jpg', 'Martin Jensen (born 29 September 1991) is a Danish DJ and record producer best known for the 2016 
+single \"Solo Dance\". His videos feature sounds sampled from viral videos and made into tropical house mixes. He has over 10 years of experience of being club DJ, 
+in Sunny Beach.');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES (NULL, 'Nhật Phong', 'nhat-phong', 'Nhat-Phong.jpg', NULL);
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Osad', 'osad', 'Osad.jpg', 'Người Âm Phủ Osad tên thật là Mai Quang Nam, sinh năm 1997, nghĩa là năm nay mới chỉ 21 tuổi. Điều bất ngờ hơn nữa là chuyên 
+ngành của Osad hoàn toàn không liên quan gì đến âm nhạc hay nghệ thuật. Anh chàng hiện đang theo học tại trường Đại học Bách Khoa – một trường đại học vô cùng danh giá, 
+đứng top đầu tại Hà Nội.');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Tones', 'tones', 'Tones.jpg', 'Definition of Tone. Tone, in written composition, is an attitude of a writer toward a subject or an audience. ... The manner 
+in which a writer approaches this theme and subject is the tone. The tone can be formal, informal, serious, comic, sarcastic, sad, or cheerful, or it may be any other 
+existing attitude.');
+INSERT INTO `artist` (`id`, `name`, `url_name`, `image`, `description`) VALUES 
+(NULL, 'Trung Tự', 'trung-tu', 'Trung-Tu.jpg', 'Trung Tự sinh năm 1992, tên thật là Nguyễn Trung Tự, được biết đến là một nam ca sĩ trẻ hát rất thành công thể loại 
+nhạc Rap được đông đảo khán giả biết đến và yêu mến.');

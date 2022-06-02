@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/mycss.css">
+  <link rel="stylesheet" href="css/artist.css">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/font-awesome-css/all.css">
+  <link rel="stylesheet" href="css/sweetalert2.css">
+
+  <script type="text/javascript" src="js/bootstrap.js"></script>
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/jquery.validate.js"></script>
+  <script type="text/javascript" src="js/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="js/sweetalert2.js"></script>
+  <script>
+    //load html header footer
+    $.ajax({
+      url:'../Server-API/load-data-page.php',
+      type:'post',
+      data: {
+        select: 'menu',
+        idAccount: localStorage.getItem("idAccount")
+      },
+      success:function(response) {
+        var response = JSON.parse(response);
+        var dataItemCountry = '';
+        var htmlBoxUser = '';
+        var htmlDropDownUser = '';
+        for (var k in response['array-country']) {
+          dataItemCountry += '<a href="top100-music.html?idCountry=' + response['array-country'][k]['id'] + '"> ' + response['array-country'][k]['name'] + ' </a>';
+        }
+        if(!response['image']) {
+          image_account = 'no-avatar.jpg';
+        } else {
+          image_account = response['image'];
+        }
+        if (localStorage.getItem("idAccount") != null) {
+          htmlBoxUser = '<img src="images/account/'+image_account+'" alt="Zing MP3" class="icon-user">';
+          htmlDropDownUser = '\
+            <a href="user-function.html?type=playlist"><li class="item-drop-down-user">Personal page</li></a>\
+            <a href="user-function.html?type=profile"><li class="item-drop-down-user">Profile</li></a>\
+            <a class="js-btn-logout"><li class="item-drop-down-user">Logout</li></a>\
+          ';
+        } else {
+          htmlBoxUser = '<i class="far fa-user"></i>';
+          htmlDropDownUser = '\
+            <a href="auth.html#login"><li class="item-drop-down-user">Login</li></a>\
+            <a href="auth.html#register"><li class="item-drop-down-user">Register</li></a>\
+          ';
+        }
+        $('header').html('\
+          <div class="container-header">\
+            <nav class="navbar-collapse">\
+              <div class="navbar-left">\
+                <a href="index.html"><img src="images/LOGO.png" alt="" class="logo"></a>\
+              </div>\
+              <div class="navbar-center">\
+                <a href="index.html" class="item-menu">Home</a>\
+                <a href="artist.html" class="item-menu">Artist</a>\
+                <div class="navbar-container">\
+                  <div class="dropdown-item-header">\
+                    <button class="dropbtn">Top 100\
+                    </button>\
+                    <div class="dropdown-content">\
+                      <div class="row-content">\
+                        <div class="column-dropdown">\
+                        ' + dataItemCountry + '\
+                        </div>\
+                      </div>\
+                    </div>\
+                  </div>\
+                </div>\
+                <a href="playlist.html" class="item-menu">PlayList</a>\
+                <form class="input-search">\
+                  <span class="input-search-prepend">\
+                    <button type="button" class="button-seach">\
+                      <svg class="feather feather-search" width="16" height="16" viewBox="0 0 24 24" fill="none"\
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">\
+                        <circle cx="11" cy="11" r="8"></circle>\
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>\
+                      </svg>\
+                    </button>\
+                  </span>\
+                  <span class="twitter-typeahead">\
+                    <input type="text" class="form-input-search" placeholder="Search..." autocomplete="off"\
+                      spellcheck="false" dir="auto">\
+                  </span>\
+                </form>\
+              </div>\
+              <div class="navbar-right">\
+                <div class="container-user">\
+                  <div class="box-user">\
+                    ' + htmlBoxUser + '\
+                  </div>\
+                  <div class="drop-down-user">\
+                    <ul class="box-drop-down-user">\
+                    ' + htmlDropDownUser + '\
+                    </ul>\
+                  </div>\
+                </div>\
+                <div class="btn-action">\
+                  <i class="fas fa-bars"></i>\
+                </div>\
+              </div>\
+            </nav>\
+            <div class="box-action">\
+              <a href="index.html">\
+                <div class="dropdown-item-header">\
+                  <button class="dropbtn">Home\
+                  </button>\
+                </div>\
+              </a>\
+              <a href="artist.html">\
+              <div class="dropdown-item-header">\
+                <button class="dropbtn">Artist\
+                </button>\
+              </div>\
+              </a>\
+              <div class="navbar-header">\
+                <div class="dropdown-item-header">\
+                  <button class="dropbtn">Top 100\
+                  </button>\
+                  <div class="dropdown-content">\
+                    <div class="row-content">\
+                      <div class="column-dropdown">\
+                        ' + dataItemCountry + '\
+                      </div>\
+                    </div>\
+                  </div>\
+                </div>\
+                <a href="playlist.html">\
+                  <div class="dropdown-item-header">\
+                    <button class="dropbtn">PlayList\
+                    </button>\
+                  </div>\
+                </a>\
+                <a href="playlist.html">\
+                  <div class="dropdown-item-header">\
+                    <button class="dropbtn">PlayList\
+                    </button>\
+                  </div>\
+                </a>\
+              </div>\
+              <form class="input-search">\
+                <span class="input-search-prepend">\
+                  <button type="button" class="button-seach">\
+                    <svg class="feather feather-search" width="16" height="16" viewBox="0 0 24 24" fill="none"\
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">\
+                      <circle cx="11" cy="11" r="8"></circle>\
+                      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>\
+                    </svg>\
+                  </button>\
+                </span>\
+                <span class="twitter-typeahead">\
+                  <input type="text" class="form-input-search" placeholder="Search..." autocomplete="off"\
+                    spellcheck="false" dir="auto">\
+                </span>\
+              </form>\
+            </div>\
+          </div>\
+        ');
+      }
+    });
+
+    //load html artists
+    $.ajax({
+      url:'../Server-API/load-data-page.php',
+      type:'post',
+      data: {
+        select: 'artist'
+      },
+      success:function(response) {
+        var response = JSON.parse(response);
+        for(var k in response['array-artist']) {
+          $('.container-artist').append('\
+            <a href="artist-details.html?idArtist=' + response['array-artist'][k]['id'] + '">\
+              <div class="box-artist">\
+                <img src="images/artists/' + response['array-artist'][k]['image'] + '" alt="">\
+                <h3 class="name-artist">\
+                  ' + response['array-artist'][k]['name'] + '\
+                </h3>\
+              </div>\
+            </a>\
+          ');
+        }
+      }
+    });
+
+    $(document).ready(function () {
+      //display box account 
+      if (localStorage.getItem("idAccount") != null) {
+        $('.box-user').html('<img src="https://avatar.talk.zdn.vn/default.jpg" alt="Zing MP3" class="icon-user">');
+        $('.box-drop-down-user').html('<a href=""><li class="item-drop-down-user">Personal page</li></a>\
+          <a href=""><li class="item-drop-down-user">Profile</li></a>\
+          <a class="js-btn-logout"><li class="item-drop-down-user">Logout</li></a>');
+      } else {
+        $('.box-user').html('<i class="far fa-user"></i>');
+        $('.box-drop-down-user').html('<a href="auth.html#login"><li class="item-drop-down-user">Login</li></a>\
+          <a href="auth.html#register"><li class="item-drop-down-user">Register</li></a>');
+      }
+
+      //handle btn logout
+      $('.js-btn-logout').click(function() {
+        localStorage.removeItem("idAccount");
+        Swal.fire({
+          icon: 'success',
+          title: 'Logout succesful',
+          timer: 8500
+        }).then((result) => {
+          location.reload();
+        })
+      });
+
+      //handle action menu responsive
+      function btnActionMenu() {
+        var boxAction = document.getElementsByClassName("box-action")[0];
+        $('.btn-action').click(function(){
+          if (boxAction.style.display == "block") {
+            boxAction.style.display = "none";
+          } else {
+            boxAction.style.display = "block";
+          }
+        });
+      }
+      btnActionMenu();
+
+      $(document).on("click",".button-seach",function() {
+        if (($('.form-input-search').val()) != '') {
+          window.location.href = "search-page.html?nameSong=" + $('.form-input-search').val();
+        }
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div class="wrap">
+    <header class="navbar-header">
+    </header>
+    <div class="main-page">
+      <div class="padding-page">
+        <div class="box-background slidess">
+          <div class="background background1"></div>
+        </div>
+        <div class="box-background slidess">
+          <div class="background background2"></div>
+        </div>
+        <div class="box-background slidess">
+          <div class="background background3"></div>
+        </div>
+        <div class="slideshow-container">
+          <div class="mySlides">
+            <h2>Amazing songs</h2>
+            <div class="box-text-slides">
+              <p>Tortor tristique in ut non mauris quam nibh mi at diam mauris
+                iaculis lobortis mauris pretium odio elementum felis nunc</p>
+            </div>
+            <a href="" class="btn-explore">Explore</a>
+          </div>
+          <div class="mySlides">
+            <h2>Bepop top charts</h2>
+            <div class="box-text-slides">
+              <p>Tellus urna eu tincidunt massa venenatis aenean arcu turpis rhoncus
+                porttitor sed molestie ac arcu integer blandit diam neque diam</p>
+            </div>
+            <a href="" class="btn-explore">Explore</a>
+          </div>
+          <div class="mySlides">
+            <h2>Find popular artist</h2>
+            <div class="box-text-slides">
+              <p>TTellus urna eu tincidunt massa venenatis aenean arcu turpis rhoncus
+                porttitor sed molestie ac arcu integer blandit diam neque diam</p>
+            </div>
+            <a href="" class="btn-explore">Explore</a>
+          </div>
+        </div>
+        <div style="text-align:center;position: relative;">
+          <span class="dot" onclick="currentSlide(1)"></span>
+          <span class="dot" onclick="currentSlide(2)"></span>
+          <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+      </div>
+      <div class="heading-artist">
+        <div>
+          <div class="txt-artist">Artist</div>
+          <h3 class="txt-hot-artist">Hot Artist</h3>
+          <div class="container-artist">
+          </div>
+        </div>
+      </div>
+      <footer class="page-footer">
+        <div class="contailner">
+          <ul class="navigation-footer uppercase">
+            <li class="column">
+              <h3>About us</h3>
+              <ul class="column-item">
+                <li><a href="#">About MYMUSIC</a></li>
+                <li><a href="#">For the Record</a></li>
+                <li><a href="#">Friendly Links</a></li>
+              </ul>
+            </li>
+            <li class="column">
+              <h3>Community</h3>
+              <ul class="column-item">
+                <li><a href="#">For Artists</a></li>
+                <li><a href="#">The Developers</a></li>
+                <li><a href="#">Brand</a></li>
+                <li><a href="#">The Supplier</a></li>
+              </ul>
+            </li>
+            <li class="column">
+              <h3>Social connection</h3>
+              <ul class="column-item">
+                <li>
+                  <img src="images/facebook-24.png" alt="Facebook">
+                  <a href="#"><span>Facebook</span></a>
+                </li>
+                <li>
+                  <img src="images/google_plus-24.png" alt="Google+">
+                  <a href="#"><span>Google+</span></a>
+                </li>
+                <li>
+                  <img src="images/youtube-24.png" alt="Youtube">
+                  <a href="#"><span>Youtube</span></a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="copyright-design">
+          <div class="contailner">
+            <div class="border-copyright-design">
+              <p class="txt-copyright">© 2019 MYMUSIC AB</p>
+              <p class="txt-design">DESIGN BY NHUT</p>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+  <script src="js/myjs.js"></script>
+
+</body>

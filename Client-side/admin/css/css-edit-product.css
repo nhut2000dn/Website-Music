@@ -1,0 +1,25 @@
+img.img-product {
+  width: 118px;
+  height: 118px;
+  border: 1px solid #c1c2c1;
+  margin: 2px;
+}
+
+main.page-main {
+  height: 910px;
+}
+
+div.main-right {
+  min-height: 890px;
+}
+
+div.main-left {
+  height: 915px;
+}
+
+table.container-table {
+  padding: 1em;
+  height: 760px;
+  display: inline-block;
+  overflow: auto;
+}

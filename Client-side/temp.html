@@ -1,0 +1,34 @@
+    <form action="" method="post" id="form" class="form-change-password">\
+      <table>\
+        <tr>\
+          <th>Your password</th>\
+          <td>\
+            <input type="password" class="password" name="password" placeholder="Your password">\
+            <div class="error-password"></div>\
+          </td>\
+        </tr>\
+        <tr>\
+          <th>New password:</th>\
+          <td>\
+            <input type="password" class="new-password" name="newPassword" placeholder="New password">\
+          </td>\
+        </tr>\
+        <tr>\
+          <th>Comfirm password:</th>\
+          <td>\
+            <input type="password" class="comfirm-password" name="confirmPassword" placeholder="Confirm password">\
+          </td>\
+        </tr>\
+        <tr>\
+          <th></th>\
+          <td>\
+            <button type="button" class="btn-change-password js-change-password" disabled>Change password</button>\
+          </td>\
+        </tr>\
+      </table>\
+    </form>\
+
+    SELECT song.id AS id_song, song.name AS name_song, song.url_name AS url_name_song, song.image AS image_song, song.views AS views_song, song.dowloads AS dowloads_song, 
+      artist.id AS id_artist, artist.name AS name_artist, country.id AS id_country, country.name AS name_country, account.id AS id_account, account.username AS username_account 
+      FROM song, artist, country, account 
+      WHERE artist.id = song.artist_id AND account.id = song.account_id AND song.country_id = country.id

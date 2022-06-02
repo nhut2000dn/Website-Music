@@ -1,0 +1,51 @@
+div.heading-artist {
+  padding-top: 3rem!important;
+  padding-bottom: 1rem!important;
+  color: white;
+  width: 100%;
+  position: relative;
+  width: 100%;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+div.txt-artist {  
+  -webkit-transform: translateY(0) scale(1);
+  color: #a8a8ac;
+}
+
+h3.txt-hot-artist { 
+  -webkit-transform: translateY(0) scale(1);
+  margin: 0;
+  margin-bottom: 1em;
+}
+
+div.container-artist::after {
+  clear: both;
+  content: "";
+  display: block;
+}
+
+div.box-artist {
+  width: 16.6%;
+  float: left;
+  padding: 2.5em 1.5em 2.5em 1.5em;
+  background-color: #ffffff26;
+  margin: 1em;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+div.box-artist img {
+  width: 100%;
+  border-radius: 99px;
+}
+
+h3.name-artist {
+  text-align: center;
+  font-size: 17px;
+  padding: 1em 0 0;
+  font-weight: 400;
+  text-decoration: none;
+  color: azure;
+}

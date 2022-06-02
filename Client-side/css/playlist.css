@@ -1,0 +1,27 @@
+div.box-new-song {
+  max-width: 17.6%;
+  margin-bottom: 2em;
+}
+
+.img-new-song {
+  width: 100%;
+  padding: 0.5em;
+  border-radius: 13px;
+}
+
+div.box-information {
+
+}
+
+p.name-playlist {
+  text-align: center;
+  margin-top: 0.8em;
+  font-size: 18px;
+  width: 78%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 0 auto;
+  text-decoration: none;
+  color: #f8f8f8;
+}

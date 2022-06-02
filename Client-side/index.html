@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/_reset.css">
+  <link rel="stylesheet" href="css/mycss.css">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/font-awesome-css/all.css">
+  <link rel="stylesheet" href="css/sweetalert2.css">
+
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/jquery.validate.js"></script>
+  <script type="text/javascript" src="js/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="js/sweetalert2.js"></script>
+  <script>
+
+    var idSongAddToPlaylist;
+
+    //load html header footer
+    $.ajax({
+      url:'../Server-API/load-data-page.php',
+      type:'post',
+      data: {
+        select: 'menu',
+        idAccount: localStorage.getItem("idAccount")
+      },
+      success:function(response) {
+        var response = JSON.parse(response);
+        var dataItemCountry = '';
+        var htmlBoxUser = '';
+        var htmlDropDownUser = '';
+        for (var k in response['array-country']) {
+          dataItemCountry += '<a href="top100-music.html?idCountry=' + response['array-country'][k]['id'] + '"> ' + response['array-country'][k]['name'] + ' </a>';
+        }
+        if(!response['image']) {
+          image_account = 'no-avatar.jpg';
+        } else {
+          image_account = response['image'];
+        }
+        if (localStorage.getItem("idAccount") != null) {
+          htmlBoxUser = '<img src="images/account/'+image_account+'" alt="Zing MP3" class="icon-user">';
+          htmlDropDownUser = '\
+            <a href="user-function.html?type=playlist"><li class="item-drop-down-user">Personal page</li></a>\
+            <a href="user-function.html?type=profile"><li class="item-drop-down-user">Profile</li></a>\
+            <a class="js-btn-logout"><li class="item-drop-down-user">Logout</li></a>\
+          ';
+        } else {
+          htmlBoxUser = '<i class="far fa-user"></i>';
+          htmlDropDownUser = '\
+            <a href="auth.html#login"><li class="item-drop-down-user">Login</li></a>\
+            <a href="auth.html#register"><li class="item-drop-down-user">Register</li></a>\
+          ';
+        }
+        $('header').html('\
+          <div class="container-header">\
+            <nav class="navbar-collapse">\
+              <div class="navbar-left">\
+                <a href="index.html"><img src="images/LOGO.png" alt="" class="logo"></a>\
+              </div>\
+              <div class="navbar-center">\
+                <a href="index.html" class="item-menu">Home</a>\
+                <a href="artist.html" class="item-menu">Artist</a>\
+                <div class="navbar-container">\
+                  <div class="dropdown-item-header">\
+                    <button class="dropbtn">Top 100\
+                    </button>\
+                    <div class="dropdown-content">\
+                      <div class="row-content">\
+                        <div class="column-dropdown">\
+                        ' + dataItemCountry + '\
+                        </div>\
+                      </div>\
+                    </div>\
+                  </div>\
+                </div>\
+                <a href="playlist.html" class="item-menu">PlayList</a>\
+                <form class="input-search">\
+                  <span class="input-search-prepend">\
+                    <button type="button" class="button-seach">\
+                      <svg class="feather feather-search" width="16" height="16" viewBox="0 0 24 24" fill="none"\
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">\
+                        <circle cx="11" cy="11" r="8"></circle>\
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>\
+                      </svg>\
+                    </button>\
+                  </span>\
+                  <span class="twitter-typeahead">\
+                    <input type="text" class="form-input-search" placeholder="Search..." autocomplete="off"\
+                      spellcheck="false" dir="auto">\
+                  </span>\
+                </form>\
+              </div>\
+              <div class="navbar-right">\
+                <div class="container-user">\
+                  <div class="box-user">\
+                    ' + htmlBoxUser + '\
+                  </div>\
+                  <div class="drop-down-user">\
+                    <ul class="box-drop-down-user">\
+                    ' + htmlDropDownUser + '\
+                    </ul>\
+                  </div>\
+                </div>\
+                <div class="btn-action">\
+                  <i class="fas fa-bars"></i>\
+                </div>\
+              </div>\
+            </nav>\
+            <div class="box-action">\
+              <a href="index.html">\
+                <div class="dropdown-item-header">\
+                  <button class="dropbtn">Home\
+                  </button>\
+                </div>\
+              </a>\
+              <a href="artist.html">\
+              <div class="dropdown-item-header">\
+                <button class="dropbtn">Artist\
+                </button>\
+              </div>\
+              </a>\
+              <div class="navbar-header">\
+                <div class="dropdown-item-header">\
+                  <button class="dropbtn">Top 100\
+                  </button>\
+                  <div class="dropdown-content">\
+                    <div class="row-content">\
+                      <div class="column-dropdown">\
+                        ' + dataItemCountry + '\
+                      </div>\
+                    </div>\
+                  </div>\
+                </div>\
+                <a href="playlist.html">\
+                  <div class="dropdown-item-header">\
+                    <button class="dropbtn">PlayList\
+                    </button>\
+                  </div>\
+                </a>\
+                <a href="playlist.html">\
+                  <div class="dropdown-item-header">\
+                    <button class="dropbtn">PlayList\
+                    </button>\
+                  </div>\
+                </a>\
+              </div>\
+              <form class="input-search">\
+                <span class="input-search-prepend">\
+                  <button type="button" class="button-seach">\
+                    <svg class="feather feather-search" width="16" height="16" viewBox="0 0 24 24" fill="none"\
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">\
+                      <circle cx="11" cy="11" r="8"></circle>\
+                      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>\
+                    </svg>\
+                  </button>\
+                </span>\
+                <span class="twitter-typeahead">\
+                  <input type="text" class="form-input-search" placeholder="Search..." autocomplete="off"\
+                    spellcheck="false" dir="auto">\
+                </span>\
+              </form>\
+            </div>\
+          </div>\
+        ');
+      }
+    });
+
+    //load html bar new song
+    $.ajax({
+      url:'../Server-API/load-data-page.php',
+      type:'post',
+      data: {
+        select: 'newSong'
+      },
+      success:function(response) {
+        var response = JSON.parse(response);
+        for(var k in response['array-new_song']) {
+          $('.bar-new-song').append('\
+            <div class="box-new-song">\
+              <a href="play-music.html?idSong=' + response['array-new_song'][k]['id_song'] + '">\
+                <div class="box-img-new-song">\
+                  <img src="images/songs/' + response['array-new_song'][k]['image_song'] + '" alt="" class="img-new-song">\
+                  <button class="btn-play"></button>\
+                </div>\
+                </a>\
+              <div class="box-information-new-song">\
+                <a href="play-music.html"><h3> ' + response['array-new_song'][k]['name_song'] + ' </h3></a>\
+                <p> ' + response['array-new_song'][k]['name_artist'] + ' </p>\
+              </div>\
+            </div>\
+          ');
+        }
+      }
+    });
+
+    //load html bar playlist
+    $.ajax({
+      url:'../Server-API/load-data-page.php',
+      type:'post',
+      data: {
+        select: 'playlist'
+      },
+      success:function(response) {
+        var response = JSON.parse(response);
+        for(var k in response['array-playlist']) {
+          $('.bar-playlist').append('\
+            <div class="box-new-song">\
+              <a href="play-playlist.html?idPlaylist=' + response['array-playlist'][k]['id_playlists'] + '">\
+                <div class="box-img-new-song">\
+                  <img src="images/playlists/' + response['array-playlist'][k]['image_playlists'] + '" alt="" class="img-new-song">\
+                  <button class="btn-play"></button>\
+                </div>\
+                </a>\
+              <div class="box-information-new-song">\
+                <a href="play-playlist.html?idPlaylist=' + response['array-playlist'][k]['id_playlists'] + '"><h3> ' + response['array-playlist'][k]['name_playlists'] + ' </h3></a>\
+                <p> ' + response['array-playlist'][k]['username_account'] + ' </p>\
+              </div>\
+            </div>\
+          ');
+        }
+      }
+    });
+
+    //load html top tracks
+    $.ajax({
+      url:'../Server-API/load-data-page.php',
+      type:'post',
+      data: {
+        select: 'topTracks'
+      },
+      success:function(response) {
+        var response = JSON.parse(response);
+        var i = 1;
+        for(var k in response['array-top_tracks']) {
+          $('.list-row').append('\
+            <div class="list-col">\
+              <div class="count-list">\
+                <span> ' + i + ' </span>\
+              </div>\
+              <div class="box-img-list">\
+                <a href="play-music.html?idSong=' + response['array-top_tracks'][k]['id_song'] + '">\
+                  <img src="images/songs/' + response['array-top_tracks'][k]['image_song'] + '" alt="" class="img-list">\
+                  <button class="btn-play-list"></button>\
+                </a>\
+              </div>\
+              <div class="box-name-list">\
+                <span>' + response['array-top_tracks'][k]['name_song'] + '</span>\
+                <div>' + response['array-top_tracks'][k]['name_artist'] + '</div>\
+              </div>\
+              <div class="box-views-list">\
+                <span><i class="fas fa-headphones-alt"></i> </span> ' + response['array-top_tracks'][k]['views_song'] + '\
+              </div>\
+              <div class="box-action-list js-display-box-playlist" data-id="' + response['array-top_tracks'][k]['id_song'] + '">\
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"\
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\
+                  class="feather feather-heart active-primary">\
+                  <path\
+                    d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">\
+                  </path>\
+                </svg>\
+                <svg class="icon-header" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"\
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\
+                  class="feather feather-more-horizontal">\
+                  <circle cx="12" cy="12" r="1"></circle>\
+                  <circle cx="19" cy="12" r="1"></circle>\
+                  <circle cx="5" cy="12" r="1"></circle>\
+                </svg>\
+              </div>\
+            </div>\
+          ');
+          i++;
+        }
+      }
+    });
+
+    //load html top 100 country
+    $.ajax({
+      url:'../Server-API/load-data-page.php',
+      type:'post',
+      data: {
+        select: 'country'
+      },
+      success:function(response) {
+        var response = JSON.parse(response);
+        var i = 1;
+        var cssBoxTop100 = '';
+        for(var k in response['array-top_100']) {
+          if (i == 1 || i == 4) {
+            cssBoxTop100 = "margin-left: 1rem;";
+          }
+          if (i == 2 || i == 5) {
+            cssBoxTop100 = "margin: 1rem 1rem 0rem 1rem;";
+          }
+          $('.bar-top100').append('\
+            <div class="box-top100" style="' + cssBoxTop100 + '">\
+              <div class="box-img-top100">\
+                <a href="top100-music.html?idCountry=' + response['array-top_100'][k]['id'] + '">\
+                  <img src="images/country/' + response['array-top_100'][k]['image'] + '" alt="" class="img-top100">\
+                  <button class="btn-play-top100"></button>\
+                </a>\
+              </div>\
+              <div class="box-name-top100">\
+                <h3>Top 100 Best song ' + response['array-top_100'][k]['name'] + '</h3>\
+              </div>\
+            </div>\
+          ');
+          cssBoxTop100 = '';
+          i++;
+        }
+      }
+    });
+
+    function loadUserPlaylist() {
+      $.ajax({
+        url:'../Server-API/load-data-page.php',
+        type:'post',
+        data: {
+          select: 'userPlaylists',
+          idAccount: localStorage.getItem("idAccount"),
+        },
+        success:function(response) {
+          var response = JSON.parse(response);
+          var imagePlaylist = '';
+          $('.container-playlists').html('');
+          for(var k in response['array_user_playlists']) {
+            $('.container-playlists').append('\
+              <div class="box-item-playlists" data-id="' + response['array_user_playlists'][k]['id'] + '">\
+                <div class="box-playlist-left">\
+                  <p class="txt-name-playlist">' + response['array_user_playlists'][k]['name'] + '</p>\
+                </div>\
+                <div class="box-playlist-right">\
+                  <p class="txt-date-time-playlist">' + response['array_user_playlists'][k]['date_time'] + '</p>\
+                </div>\
+              </div>\
+            ');
+          }
+        }
+      });
+    }
+
+    $(document).ready(function () {
+      //handle btn logout
+      $(document).on("click",".js-btn-logout",function() {
+        localStorage.removeItem("idAccount");
+        Swal.fire({
+          icon: 'success',
+          title: 'Logout succesful',
+          timer: 8500
+        }).then((result) => {
+          location.reload();
+        })
+      });
+
+      //handle action menu responsive
+      function btnActionMenu() {
+        var boxAction = document.getElementsByClassName("box-action")[0];
+        $('.btn-action').click(function(){
+          if (boxAction.style.display == "block") {
+            boxAction.style.display = "none";
+          } else {
+            boxAction.style.display = "block";
+          }
+        });
+      }
+      btnActionMenu();
+
+      // handle check error create playlist
+      $(".form-create-playlist").validate({
+        rules: {
+          namePlaylist: "required"
+        },
+        messages: {
+          namePlaylist: ""
+        },
+        onkeyup: function() {
+          if ($('.form-create-playlist').valid() == true) {
+            $('.js-create-playlist').prop('disabled', false);
+          } else {
+            $('.js-create-playlist').prop('disabled', true);
+          }
+        }
+      });
+    
+      //display model add song to playlist
+      $(document).on('click','.js-display-box-playlist',function() {
+        if (localStorage.getItem("idAccount") != null) {
+          idSongAddToPlaylist = $(this).attr('data-id');
+          $('#boxAddToPlaylist').modal('show');
+          loadUserPlaylist();
+        } else {
+          Swal.fire(
+            'Login?',
+            'You are not logged in?',
+            'question'
+          )
+        }
+      });
+
+      //handle create new playlist
+      $('.js-create-playlist').click(function() {
+        var namePlaylist = $('.input-name-playlist').val();
+        $.ajax({
+          url: "../Server-API/CreatePlaylist.php",
+          type: "post",
+          dataType :"text",
+          data: {
+            idAccount: localStorage.getItem("idAccount"),
+            namePlaylist: namePlaylist
+          },
+          success:function (response){
+            if (response == 'succesful') {
+              Swal.fire({
+                title: 'Create playlist succesful',
+                text: '',
+                icon: 'success',
+              }).then((result) => {
+                $('.input-name-playlist').val('');
+                $('.js-create-playlist').prop('disabled', true);
+                loadUserPlaylist();
+              });
+            }
+          }
+        });
+      });
+
+      $(document).on("click",".box-item-playlists",function() {
+        var idPlaylist = $(this).attr('data-id');
+        $.ajax({
+          url: "../Server-API/AddSongToPlaylist.php",
+          type: "post",
+          dataType :"text",
+          data: {
+            idPlaylist: idPlaylist,
+            idSong: idSongAddToPlaylist
+          },
+          success:function (response){
+            if (response == 'succesful') {
+              Swal.fire({
+                icon: 'success',
+                title: 'Add to playlist succesful',
+                text: '',
+                showConfirmButton: false,
+                timer: 4500
+              }).then((result) => {
+              })
+            } else if (response == 'fail') {
+              Swal.fire({
+                icon: 'error',
+                title: 'Playlist have been add this song!',
+                text: '',
+              })
+            } else {
+              alert(response);
+            }
+          }
+        });
+      });
+
+      $(document).on("click",".button-seach",function() {
+        if (($('.form-input-search').val()) != '') {
+          window.location.href = "search-page.html?nameSong=" + $('.form-input-search').val();
+        }
+      });
+      
+    });
+  </script>
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- header page -->
+    <header class="navbar-header">
+    </header>
+
+    <!-- main page -->
+    <section>
+      <div class="main-page">
+        <div class="padding-page">
+          <div class="box-background slidess">
+            <div class="background background1"></div>
+          </div>
+          <div class="box-background slidess">
+            <div class="background background2"></div>
+          </div>
+          <div class="box-background slidess">
+            <div class="background background3"></div>
+          </div>
+          <div class="slideshow-container">
+            <div class="mySlides">
+              <h2>Amazing songs</h2>
+              <div class="box-text-slides">
+                <p>Tortor tristique in ut non mauris quam nibh mi at diam mauris
+                  iaculis lobortis mauris pretium odio elementum felis nunc</p>
+              </div>
+              <a href="" class="btn-explore">Explore</a>
+            </div>
+            <div class="mySlides">
+              <h2>Bepop top charts</h2>
+              <div class="box-text-slides">
+                <p>Tellus urna eu tincidunt massa venenatis aenean arcu turpis rhoncus
+                  porttitor sed molestie ac arcu integer blandit diam neque diam</p>
+              </div>
+              <a href="" class="btn-explore">Explore</a>
+            </div>
+            <div class="mySlides">
+              <h2>Find popular artist</h2>
+              <div class="box-text-slides">
+                <p>TTellus urna eu tincidunt massa venenatis aenean arcu turpis rhoncus
+                  porttitor sed molestie ac arcu integer blandit diam neque diam</p>
+              </div>
+              <a href="" class="btn-explore">Explore</a>
+            </div>
+          </div>
+          <div style="text-align:center;position: relative;">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+          </div>
+        </div>
+
+        <!-- bar new song -->
+        <div class="heading-topweek">
+          <div>
+            <div class="txt-new-song">All song</div>
+            <h3 class="txt-toptracks">New posted</h3>
+            <div class="bar-new-song"></div>
+          </div>
+        </div>
+
+        <!-- bar playlist -->
+        <div class="heading-topweek">
+          <div>
+            <div class="txt-new-song">Featured</div>
+            <h3 class="txt-toptracks">Playlist</h3>
+            <div class="bar-playlist"></div>
+          </div>
+        </div>
+        <div class="row-main">
+
+          <!-- lists top track -->
+          <div class="row-left">
+            <div class="heading">
+              <div>User</div>
+              <h3>Top tracks</h3>
+            </div>
+            <div class="list-row"></div>
+          </div>
+
+          <!-- bar top 100 -->
+          <div class="row-right">
+            <div class="heading">
+              <div>Ranking</div>
+              <h3>Top 100</h3>
+            </div>
+            <div class="bar-top100">
+            </div>
+          </div>
+        </div>
+    </section>
+
+    <!-- footer page -->
+    <footer class="page-footer">
+    </footer>
+  </div>
+
+  <!-- Model add to playlist -->
+  <div class="modal fade modal-playlist" id="boxAddToPlaylist" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Add song to playlist</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container-playlists">
+          </div>
+          <div class="container-add-playlist">
+            <form action="" method="post" class="form-create-playlist">
+              <input type="text" class="input-name-playlist" name="namePlaylist">
+              <button type="button" class="btn-create-playlist js-create-playlist" disabled>Create playlist</button>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="js/myjs.js"></script>
+  <script>
+    //load html footer
+    $('.page-footer').html('\
+      <div class="container-footer">\
+        <ul class="navigation-footer uppercase">\
+          <li class="column">\
+            <h3>About us</h3>\
+            <ul class="column-item">\
+              <li><a href="#">About MYMUSIC</a></li>\
+              <li><a href="#">For the Record</a></li>\
+              <li><a href="#">Friendly Links</a></li>\
+            </ul>\
+          </li>\
+          <li class="column">\
+            <h3>Community</h3>\
+            <ul class="column-item">\
+              <li><a href="#">For Artists</a></li>\
+              <li><a href="#">The Developers</a></li>\
+              <li><a href="#">Brand</a></li>\
+              <li><a href="#">The Supplier</a></li>\
+            </ul>\
+          </li>\
+          <li class="column">\
+            <h3>Social connection</h3>\
+            <ul class="column-item">\
+              <li>\
+                <img src="images/facebook-24.png" alt="Facebook">\
+                <a href="#"><span>Facebook</span></a>\
+              </li>\
+              <li>\
+                <img src="images/google_plus-24.png" alt="Google+">\
+                <a href="#"><span>Google+</span></a>\
+              </li>\
+              <li>\
+                <img src="images/youtube-24.png" alt="Youtube">\
+                <a href="#"><span>Youtube</span></a>\
+              </li>\
+            </ul>\
+          </li>\
+        </ul>\
+      </div>\
+      <div class="copyright-design">\
+        <div class="container-footer">\
+          <div class="border-copyright-design">\
+            <p class="txt-copyright">© 2019 MYMUSIC AB</p>\
+            <p class="txt-design">DESIGN BY NHUT</p>\
+          </div>\
+        </div>\
+      </div>\
+    ');
+  </script>
+</body>
+</html>

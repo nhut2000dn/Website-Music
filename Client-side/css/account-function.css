@@ -1,0 +1,395 @@
+div.main-page-function {
+	position: relative;
+  margin-top: 2em;
+  background: #e6dfdf;
+}
+
+div.main-page-function::after {
+	clear: both;
+	display: block;
+	content: "";
+}
+
+div.main-left {
+	float: left;
+	min-width: 275px;
+  background: #ffffff;
+  border-radius: 2px;
+  box-shadow: 0px 4px 11px 0px rgba(0, 0, 0, 0.2);
+}
+
+div.container-main-left {
+  padding: 1em;
+}
+
+div.container-account {
+  margin-top: 0.5em;
+}
+
+div.container-account::after {
+	clear: both;
+	display: block;
+	content: "";
+}
+
+div.icon-left {
+  float: left;
+  font-size: 3em;
+  color: #9995ae;
+}
+
+div.account-right {
+  float: left;
+  margin-left: 1em;
+  margin-top: 0.9em;
+}
+
+div.account-right h4 {
+  font-family: sans-serif;
+  font-size: 1em;		
+}
+
+div.account-right h5 {
+  color: #b1adb1;
+  margin-top: 5px;
+}
+
+div.account-right h5 .fa-edit {
+  margin-right: 4px;
+}
+
+div.container-menu-account {
+  margin-top: 2em;	
+}
+
+div.container-menu-account div {
+  display: block;
+}
+
+div.container-item-account {
+  padding: 0.4em;
+  cursor: pointer;
+}
+
+div.container-item-account:hover {
+  background-color: #e4e3e3;
+}
+
+div.container-item-account::after {
+	clear: both;
+	display: block;
+	content: "";
+}
+
+div.icon-item-left {
+  float: left;
+  font-size: 1.3em;
+}
+
+.fa-music {
+  color: rgb(0, 136, 197);
+}
+
+div.icon-item-left .fa-user-circle {
+  color: #ecae22;
+}
+
+div.item-right {
+  margin-left: 0.5em;
+  float: left;
+  color: #5f595f;
+}
+
+div.title-fucntion {
+  padding-bottom: 0.5em;
+  border-bottom: 2px solid #efebef;
+}
+
+div.title-fucntion::after {
+	clear: both;
+	display: block;
+	content: "";
+}
+
+.title-left {
+  float: left;
+  font-size: 1.6em;
+  font-weight: 400;
+}
+
+div.item-right p {
+  margin: 0;
+  margin-top: 0.3em;
+}
+
+div.drop-down-account {
+  padding: 0.4em;	
+}
+
+ul.bar-drop-down-account {
+  margin: 0;
+  margin-left: 1.7em;
+  text-decoration: none;
+  list-style: none;
+}
+
+li.item-drop-down {
+  margin-bottom: 0.8em;
+  margin-top: 0.2em;
+  cursor: pointer;
+}
+
+li.item-drop-down div {
+  color: #5f595f;
+}
+
+li.item-drop-down div:hover {
+  background-color: #e4e3e3;
+}
+
+div.main-right {
+	float: right;
+  width: 907px;
+  padding: 1em;
+  background: #ffffff;
+  padding-bottom: 1.5em;
+}
+
+div.title-right {
+  float: right;
+}
+
+div.title-right button {
+  border-radius: 2px;
+  border: 0;
+  background-color: #138888;
+  color: white;
+}
+
+div.container-main-right {
+  width: 100%;
+  margin-top: 0.5em;
+}
+
+div.container-main-rigt::after {
+  clear: both;
+  display: block;
+  content: "";
+}
+
+div.box-playlist {
+  float: left;
+  margin-top: 1em;
+  border: 2px solid #efebef;
+  border-radius: 3px;
+  background-color: #efebeb;
+  margin-right: 1.2em;
+}
+
+a.link-image-playlist {
+  height: 151px;
+  display: block;
+}
+
+div.box-playlist img {
+  width: 151px;
+  height: 151px;
+}
+
+div.box-information-playlist {
+  padding: 8px;
+  color: #155724;
+}
+
+p.name-playlist {
+  margin-bottom: 0.2em;
+  width: 135px;
+  overflow: hidden;
+  text-overflow: ellipsis; 
+  white-space: nowrap; 
+}
+
+div.action-playlist {
+  margin: 9px 0;
+}
+
+p.action-playlist::after {
+  clear: both;
+  display: block;
+  content: "";
+}
+
+p.action-playlist {
+  margin: 10px 0 4px 0;
+}
+
+p.action-playlist .fa-pen {
+  float: left;
+  color: #489647;
+  padding: 0.3em 0.3em;
+  border-radius: 5px;
+
+}
+
+p.action-playlist .fa-trash-alt {
+  float: right;
+  color: #bd5454;
+  padding: 0.3em 0.3em;
+  border-radius: 5px;
+}
+
+p.action-playlist .fa-list {
+  float: left;
+  color: #464646;
+  padding: 0.3em 0.3em;
+  border-radius: 5px;
+  margin-left: 1.8em;
+}
+
+input.input-name-playlist {
+  width: 100%;
+  border-radius: 3px;
+  border: 1px solid #b9b9b9;
+  height: 37px;
+  font-size: 18px;
+}
+
+input.input-image-playlist {
+  margin-top: 1em;
+}
+
+.img-edit-playlist {
+  display: block;
+  margin-top: 1em;
+  width: 151px;
+}
+
+div.container-playlist-songs {
+  width: 100%;
+  height: 328px;
+  overflow: auto;
+}
+
+div.item-playlist-songs {
+  width: 100%;
+  margin: 11px 0;
+  border-bottom: 1px solid #d2d2d2;
+}
+
+div.item-playlist-songs::after {
+  clear: both;
+  display: block;
+  content: "";
+}
+
+div.information-songs-left {
+  float: left;
+}
+
+p.txt-songs {
+  margin: 0;
+}
+
+p.txt-songs .txt-name-song {
+  font-size: 17px;
+}
+
+p.txt-songs .txt-name-song a {
+  color: #2f2e2e;
+}
+
+p.txt-songs .txt-name-artist {
+  color: #797979;
+  font-size: 15px;
+}
+
+div.action-songs-right {
+  float: right;
+}
+
+p.action-song {
+  margin: 0;
+}
+
+p.action-song .fa-trash-alt {
+  color: #bd5454;
+  padding: 0.3em 0.3em;
+  border-radius: 5px;
+}
+
+form.form-change-password {
+  width: 100%;
+}
+
+form.form-change-password input {
+  display: block;
+  width: 46%;
+  margin-top: 1em;
+  border-radius: 3px;
+  padding: 0.3em;
+  border: 2px solid #d8d4d8;
+}
+
+button.btn-change-password {
+  margin-top: 2em;
+  border: 1px solid #0fa7bf;
+  border-radius: 3px;
+  background-color: #0fa7bf;
+  color: white;
+}
+
+button.btn-change-password:disabled {
+  border: 1px solid #8e8e8e;
+  background-color: #8e8e8e;
+}
+
+div.form-profile {
+  width: 100%;
+}
+
+div.form-profile::after {
+  clear: both;
+  display: block;
+  content: "";
+}
+
+div.profile-left {
+  width: 54%;
+  float: left;
+  border-right: 1px solid #6d6d6d;
+}
+
+td.col-profile-left {
+  padding: 0.7em;
+  width: 100%;
+}
+
+tr.row-profile-left th {
+  color: #797474;
+  font-weight: 600;
+  font-size: 1.02em;
+}
+
+td.col-profile-left input[type=text] {
+  border: 2px solid #d8d4d8;
+  border-radius: 3px;
+  width: 90%;
+}
+
+div.profile-right {
+  width: 39%;
+  float: right;
+}
+
+img.img-avatar {
+  width: 121px;
+  height: 121px;
+  border-radius: 109px;
+  border: 1px solid #efebef;
+  margin-bottom: 0.2em;
+}
+
+span.img-txt {
+  color: #908790;
+  font-size: 0.9em;
+}

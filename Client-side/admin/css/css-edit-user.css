@@ -1,0 +1,126 @@
+div.main-right {
+  min-height: 855px;
+  width: 38%;
+  float: left;
+  margin-top: 0;
+}
+
+section.name-main-right {
+  background-color: #ffffff;
+  border-radius: 5px 5px 0px 0px;
+}
+
+a {
+  text-decoration: none;
+}
+
+p.edit {
+  margin-bottom: 1%;
+  margin-top: 2%;
+  margin-left: 3%;
+  font-size: 2.11em;
+  color: #333333;
+}
+
+form {
+  padding: 1%;
+}
+
+table {
+  padding: 1em;
+}
+
+table td input[type="text"] {
+  width: 468px;
+  height: 24px;
+  border: 1.2px solid #b5b5b5;
+  padding-left: 8px;
+  padding-right: 8px;
+  color: #003366;
+  outline: none;
+  margin-bottom: 0.5em;
+}
+
+select {
+  margin-bottom: 0.7em;
+}
+
+.gt {
+  margin-top: 4px;
+  width: 20%;
+  background: #fff;
+  margin-bottom: 1%;
+  border: 1px solid #ccc;
+  padding: 1%;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 95%;
+  color: #555;
+}
+
+.sn {
+  margin-top: 4px;
+  width: 17.6%;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 1%;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 95%;
+  color: #555;
+}
+
+.status {
+  margin-top: 4px;
+  width: 31%;
+  background: #fff;
+  margin-bottom: 1%;
+  border: 1px solid #ccc;
+  padding: 1%;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 95%;
+  color: #555;
+}
+
+.classify {
+  margin-top: 4px;
+  width: 31%;
+  background: #fff;
+  margin-bottom: 1%;
+  border: 1px solid #ccc;
+  padding: 1%;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 95%;
+  color: #555;
+}
+
+button {
+  margin-top: 1em;
+  width: 36%;
+  background: #3399cc;
+  border: 0;
+  padding: 2%;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 100%;
+  color: #fff;
+  cursor: pointer;
+  transition: background .3s;
+  -webkit-transition: background .3s;
+}
+
+table td input[type="password"] {
+  width: 253px;
+  height: 24px;
+  border: 1.2px solid #b5b5b5;
+  padding-left: 8px;
+  padding-right: 8px;
+  color: #003366;
+  outline: none;
+  margin-bottom: 0.5em;
+}
+
+td.coll-change-password {
+  line-height: 5em;
+}
+
+tr.change-password {
+  line-height: 1.5em;
+}

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/_reset.css">
+  <link rel="stylesheet" href="css/mycss.css">
+  <link rel="stylesheet" href="css/account-function.css">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/font-awesome-css/all.css">
+  <link rel="stylesheet" href="css/sweetalert2.css">
+
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/jquery.validate.js"></script>
+  <script type="text/javascript" src="js/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="js/sweetalert2.js"></script>
+  <script type="text/javascript" src="js/user-function.js"></script>
+  <script type="text/javascript" src="js/user-function-playlists.js"></script>
+  <script type="text/javascript" src="js/user-function-change-password.js"></script>
+  <script type="text/javascript" src="js/user-function-profile.js"></script>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <!-- header page -->
+    <header class="navbar-header">
+    </header>
+
+    <!-- main page -->
+    <section>
+      <div class="main-page">
+        <div class="padding-page">
+          <div class="box-background slidess">
+            <div class="background background1"></div>
+          </div>
+          <div class="box-background slidess">
+            <div class="background background2"></div>
+          </div>
+          <div class="box-background slidess">
+            <div class="background background3"></div>
+          </div>
+          <div class="slideshow-container">
+            <div class="mySlides">
+              <h2>Amazing songs</h2>
+              <div class="box-text-slides">
+                <p>Tortor tristique in ut non mauris quam nibh mi at diam mauris
+                  iaculis lobortis mauris pretium odio elementum felis nunc</p>
+              </div>
+              <a href="" class="btn-explore">Explore</a>
+            </div>
+            <div class="mySlides">
+              <h2>Bepop top charts</h2>
+              <div class="box-text-slides">
+                <p>Tellus urna eu tincidunt massa venenatis aenean arcu turpis rhoncus
+                  porttitor sed molestie ac arcu integer blandit diam neque diam</p>
+              </div>
+              <a href="" class="btn-explore">Explore</a>
+            </div>
+            <div class="mySlides">
+              <h2>Find popular artist</h2>
+              <div class="box-text-slides">
+                <p>TTellus urna eu tincidunt massa venenatis aenean arcu turpis rhoncus
+                  porttitor sed molestie ac arcu integer blandit diam neque diam</p>
+              </div>
+              <a href="" class="btn-explore">Explore</a>
+            </div>
+          </div>
+          <div style="text-align:center;position: relative;">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+          </div>
+        </div>
+
+        <div class="main-page-function">
+          <div class="main-left">
+            <div class="container-main-left">
+              <div class="container-account">
+                <div class="icon-left">
+                  <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="account-right">
+                  <h4 class="txt-username"></h4>
+                  <div>
+                    <h5 class=""><i class="far fa-edit"></i>Edit profile</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="container-menu-account">
+                <div class="container-item-account">
+                  <div class="icon-item-left">
+                    <i class="fas fa-user-circle"></i>
+                  </div>
+                  <div class="item-right">
+                    <p class="">My account</p>
+                  </div>
+                </div>
+                <div class="drop-down-account">
+                  <ul class="bar-drop-down-account">
+                    <li class="item-drop-down">
+                      <div class="txt-profile js-menu-profile">Profile</a>
+                        <div>
+                    <li class="item-drop-down">
+                      <div class="txt-change-password js-menu-password">Change password</div>
+                    </li>
+                  </ul>
+                </div>
+                <div href="user-function.php?order">
+                  <div class="container-item-account js-menu-playlist">
+                    <div class="icon-item-left">
+                      <i class="fas fa-music"></i>
+                    </div>
+                    <div class="item-right">
+                      <p class="txt-item-right">Your playlist</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="main-right">
+            <div class="title-fucntion">
+            </div>
+            <div class="container-main-right">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- footer page -->
+    <footer class="page-footer">
+    </footer>
+
+    <!-- Modal create playlist -->
+    <div class="modal fade modal-playlist" id="exampleModalCenter" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Create playlist</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="user-function.html" method="post" class="form-create-playlist">
+              <input type="text" class="input-name-playlist" name="namePlaylist">
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary js-create-playlist" disabled>Create</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal edit playlist -->
+    <div class="modal fade modal-edit-playlist" id="boxEditPlaylist" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Edit playlist</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="user-function.html" method="post" class="form-edit-playlist">
+              <input type="text" class="input-name-playlist name-edit-playlist" name="nameEditPlaylist"
+                placeholder="Enter your name playlist">
+              <input type="file" id="file" class="input-image-playlist" name="file" onchange="readURL(this);" />
+              <img id="blah0" class="img-edit-playlist blah0" src="" alt="">
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary js-edit-playlist">Edit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade modal-playlist" id="boxEditPlaylistsongs" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Edit playlist songs</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="container-playlist-songs"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <script src="js/myjs.js"></script>
+  <script>
+    //load html footer
+    $('.page-footer').html('\
+      <div class="container-footer">\
+        <ul class="navigation-footer uppercase">\
+          <li class="column">\
+            <h3>About us</h3>\
+            <ul class="column-item">\
+              <li><a href="#">About MYMUSIC</a></li>\
+              <li><a href="#">For the Record</a></li>\
+              <li><a href="#">Friendly Links</a></li>\
+            </ul>\
+          </li>\
+          <li class="column">\
+            <h3>Community</h3>\
+            <ul class="column-item">\
+              <li><a href="#">For Artists</a></li>\
+              <li><a href="#">The Developers</a></li>\
+              <li><a href="#">Brand</a></li>\
+              <li><a href="#">The Supplier</a></li>\
+            </ul>\
+          </li>\
+          <li class="column">\
+            <h3>Social connection</h3>\
+            <ul class="column-item">\
+              <li>\
+                <img src="images/facebook-24.png" alt="Facebook">\
+                <a href="#"><span>Facebook</span></a>\
+              </li>\
+              <li>\
+                <img src="images/google_plus-24.png" alt="Google+">\
+                <a href="#"><span>Google+</span></a>\
+              </li>\
+              <li>\
+                <img src="images/youtube-24.png" alt="Youtube">\
+                <a href="#"><span>Youtube</span></a>\
+              </li>\
+            </ul>\
+          </li>\
+        </ul>\
+      </div>\
+      <div class="copyright-design">\
+        <div class="container-footer">\
+          <div class="border-copyright-design">\
+            <p class="txt-copyright">© 2019 MYMUSIC AB</p>\
+            <p class="txt-design">DESIGN BY NHUT</p>\
+          </div>\
+        </div>\
+      </div>\
+    ');
+  </script>
+</body>
+
+</html>

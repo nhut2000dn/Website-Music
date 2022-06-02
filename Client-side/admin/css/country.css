@@ -1,0 +1,314 @@
+body {
+}
+
+div.content-main-right {
+  height: 97%;
+  overflow: auto;
+}
+
+table.member {
+  font-size: 90%;
+  border-collapse: collapse;
+  font-family: Helvetica,Arial;
+  width: 100%;
+}
+
+table.member thead {
+  background-color: #1382ac;
+  color: aliceblue;
+}
+
+table.member thead th {
+  background: #10576f;
+  color: #ffffff;
+  padding: 3px;
+  text-align: center;
+  font-size: 0.95em;
+  border: 1px solid #37618c;
+}
+
+table.member tbody td {
+  color: #777777;
+  border: 1px solid #dcdcdc;
+  text-align: center;
+}
+
+table.member tbody td.button {
+  padding: 7.5px;
+  color: #777777;
+  border: 1px solid #dcdcdc;
+  text-align: center;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+tbody.content-table tr:hover {
+  background-color: #efefef;
+}
+
+span.btn-edit {
+  text-decoration: none;
+  border: 0;
+  background-color: #A0E6FE;
+  border-radius: 3px 3px 3px 3px;
+  box-shadow: inset 0 -15px 30px rgba(0,0,0,0.4);
+  text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+  font-family: cursive;
+  font-size: 16px;
+  color: #FFFFFF;
+  padding: 3px;
+  padding-top: 0em;
+  padding-left: 1em;
+  padding-right: 1em;
+  cursor: pointer;
+}
+
+span.btn-delete {
+  text-decoration: none;
+  border: 0;
+  background-color: #FF0000;
+  border-radius: 3px 3px 3px 3px;
+  box-shadow: inset 0 -15px 30px rgba(0,0,0,0.4);
+  text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+  font-family: cursive;
+  font-size: 16px;
+  color: #FFFFFF;
+  padding: 3px;
+  padding-top: 0em;
+  padding-left: 1em;
+  padding-right: 1em;
+  cursor: pointer;
+}
+
+span.btn-detail {
+  text-decoration: none;
+  border: 0;
+  background-color: yellow;
+  border-radius: 3px 3px 3px 3px;
+  border: 1px solid #fff;
+  box-shadow: inset 0 -15px 30px rgba(0,0,0,0.4);
+  text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+  font-family: cursive;
+  font-size: 16px;
+  color: #FFFFFF;
+  padding: 3px;
+  padding-top: 0em;
+  padding-left: 1em;
+  padding-right: 1em;
+  cursor: pointer;
+}
+
+a.btn-Refesh {
+  text-decoration: none;
+  border: 0;
+  background-color: yellow;
+  border-radius: 3px 3px 3px 3px;
+  border: 1px solid #fff;
+  box-shadow: inset 0 -15px 30px rgba(0,0,0,0.4);
+  text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+  font-family: cursive;
+  font-size: 16px;
+  color: #FFFFFF;
+  padding: 3px;
+  padding-top: 0em;
+  padding-left: 1em;
+  padding-right: 1em;
+  cursor: pointer;
+}
+
+p.txt-tile-left {
+  font-size: 1.8em;
+  color: #333333;
+  font-weight: 800;
+  margin: 0;
+}
+
+div.title-bar {
+  padding: 1em;
+}
+
+div.title-bar::after {
+  clear: both;
+  display: block;
+  content: "";
+}
+
+div.title-left {
+  float: left;
+  width: 41%;
+}
+
+div.title-right {
+  float: right;
+}
+
+form.form-search {
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+
+input.content-search {
+  width: 261px;
+  height: 24px;
+  padding-top: 2px;
+  font-size: 16px;
+  border: 1px solid #bdb2b2;
+  border-radius: 3px;
+}
+
+select.select-search {
+  padding: 0.3em;
+  font-size: 16px;
+  font-weight: bold;
+  border: 1px solid #bdb2b2;
+  border-radius: 3px;
+}
+
+button.submit-btn {
+  text-decoration: none;
+  border: 0;
+  background-color: #46f127;
+  border-radius: 3px 3px 3px 3px;
+  box-shadow: inset 0 -15px 30px rgba(0,0,0,0.4);
+  text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+  font-family: cursive;
+  font-size: 16px;
+  color: #FFFFFF;
+  padding: 3px;
+  padding-bottom: 0.3em;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+p.notify-member {
+  font-size: 17px;
+  color: red;
+  margin-left: 1.77em;
+  margin-top: 1em;
+}
+
+div.bottom-main-right {
+  color: #FFFFFF;
+  background: #0c485d;
+  border-radius: 0 0 5px 5px;
+}
+
+table.colum tbody {
+  float: right;
+}
+
+div.nav-btom {
+  padding: 0.4em;
+}
+
+div.nav-btom::after {
+  clear: both;
+  content: "";
+  display: block;
+}
+
+div.txt-nav-bottom {
+  float: right;
+  margin-right: 1.1em;
+}
+
+table.member tbody td {
+  vertical-align: middle;
+}
+
+td.name-product {
+  width: 148px;
+}
+
+td.describe {
+  width: 300px;
+}
+
+img.img-product {
+  width: 81px;
+}
+
+td.species-product {
+  width: 84px;
+}
+
+p.btn-add {
+  text-decoration: none;
+  border: 0;
+  background-color: #46f127;
+  border-radius: 3px 3px 3px 3px;
+  box-shadow: inset 0 -15px 30px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
+  font-family: cursive;
+  font-size: 18.62px;
+  color: #FFFFFF;
+  padding: 3px;
+  padding-bottom: 0.3em;
+  padding-left: 1em;
+  padding-right: 1em;
+  cursor: pointer;
+}
+
+table.table-detail-song {
+  width: 100%;
+}
+
+table.table-detail-song tbody {
+  width: 100%;
+}
+
+tr.item-detail th,td {
+  padding: 10px;
+  vertical-align: middle;
+  border: 1px solid #dddddd;
+}
+
+span.name-item {
+  vertical-align: top;
+}
+
+.img-country {
+  width: 118px;
+  height: 118px;
+  border: 1px solid #dedede;
+}
+
+.form-edit-account {
+  width: 100%;
+}
+
+.form-edit-account span {
+  display: block;
+  margin: 15px 0 0 0;
+}
+
+.form-add-account {
+  width: 100%;
+}
+
+.form-add-account span {
+  display: block;
+  margin: 15px 0 0 0;
+}
+
+.item-form-edit {
+  display: block;
+  width: 76%;
+}
+
+.form-add-song {
+  width: 100%;
+}
+
+.form-add-song span {
+  display: block;
+  margin: 15px 0 0 0;
+}
+
+img.image-account {
+  width: 58px;
+}
+
+#imgFileEdit {
+  display: block;
+}

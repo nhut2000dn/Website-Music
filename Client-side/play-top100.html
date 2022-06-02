@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/_reset.css">
+  <link rel="stylesheet" href="css/mycss.css">
+  <link rel="stylesheet" href="css/play-playlist.css">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/font-awesome-css/all.css">
+  <link rel="stylesheet" href="css/sweetalert2.css">
+
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/jquery.validate.js"></script>
+  <script type="text/javascript" src="js/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="js/sweetalert2.js"></script>
+  <script type="text/javascript" src="js/play-top100.js"></script>
+</head>
+
+<body>
+  <div class="wrap">
+    <header class="navbar-header">
+    </header>
+    <div class="main-page">
+      <div class="padding-page">
+        <div class="box-background slidess">
+          <div class="background background1"></div>
+        </div>
+        <div class="box-background slidess">
+          <div class="background background2"></div>
+        </div>
+        <div class="box-background slidess">
+          <div class="background background3"></div>
+        </div>
+        <div class="slideshow-container">
+          <div class="mySlides">
+            <h2>Amazing songs</h2>
+            <div class="box-text-slides">
+              <p>Tortor tristique in ut non mauris quam nibh mi at diam mauris
+                iaculis lobortis mauris pretium odio elementum felis nunc</p>
+            </div>
+            <a href="" class="btn-explore">Explore</a>
+          </div>
+          <div class="mySlides">
+            <h2>Bepop top charts</h2>
+            <div class="box-text-slides">
+              <p>Tellus urna eu tincidunt massa venenatis aenean arcu turpis rhoncus
+                porttitor sed molestie ac arcu integer blandit diam neque diam</p>
+            </div>
+            <a href="" class="btn-explore">Explore</a>
+          </div>
+          <div class="mySlides">
+            <h2>Find popular artist</h2>
+            <div class="box-text-slides">
+              <p>TTellus urna eu tincidunt massa venenatis aenean arcu turpis rhoncus
+                porttitor sed molestie ac arcu integer blandit diam neque diam</p>
+            </div>
+            <a href="" class="btn-explore">Explore</a>
+          </div>
+        </div>
+        <div style="text-align:center;position: relative;">
+          <span class="dot" onclick="currentSlide(1)"></span>
+          <span class="dot" onclick="currentSlide(2)"></span>
+          <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+      </div>
+      <div class="main-play-music">
+        <div class="main-left">
+          <div class="container-play-music">
+            <div class="title-play-music"></div>
+            <div class="box-play-music">
+              <div class="box-contain-play">
+                <div class="box-img-music">
+                </div>
+                <div class="play-name-music">
+                  <div class="box-img-small">
+                  </div>
+                  <div class="box-name-song">
+                    <h3 class="name-song"></h3>
+                  </div>
+                  <div class="box-name-artists">
+                    <h3 class="name-arists"></h3>
+                  </div>
+                  <div class="box-lyrics-playing">
+                    <h4>(No karaoke yet)</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="bar-audio">
+                <audio controls autoplay="autoplay" id="myAudio">
+                  <source src="" type="audio/mpeg">
+                </audio>
+              </div>
+            </div>
+            <div class="container-playlist">
+              <div class="box-playlist"></div>
+            </div>
+            <div class="box-player">
+            </div>
+            <div class="box-lyrics">
+            </div>
+          </div>
+          <div class="heading-topweek">
+            <div>
+              <div class="txt-new-song">Featured</div>
+              <h3 class="txt-toptracks">Playlist</h3>
+              <div class="bar-playlist">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="main-right">
+          <div class="listen-next-box">
+            <div class="heading-right">
+              <div class="txt-listen-next">Listen Next</div>
+              <div class="box_title_genre">
+                <label class="switch">
+                  <input type="checkbox" checked="checked" id="chbxAutoplay">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+            <div id="hidden-listen" class="listen-next-hidden">
+            </div>
+          </div>
+          <p class="btn_more_item btn-listen">
+            <a id="showListen" href="javascript:;" class="btn_viewall showListen">See More</a>
+            <a id="hideListen" href="javascript:;" class="btn_viewall hideListen">Compact</a>
+          </p>
+          <div class="box-top-100">
+            <div class="heading-right-top100">
+              <span>Top 100</span>
+            </div>
+            <div class="container-top100"></div>
+          </div>
+        </div>
+      </div>
+      <footer class="page-footer">
+        <div class="container-footer">
+          <ul class="navigation-footer uppercase">
+            <li class="column">
+              <h3>About us</h3>
+              <ul class="column-item">
+                <li><a href="#">About MYMUSIC</a></li>
+                <li><a href="#">For the Record</a></li>
+                <li><a href="#">Friendly Links</a></li>
+              </ul>
+            </li>
+            <li class="column">
+              <h3>Community</h3>
+              <ul class="column-item">
+                <li><a href="#">For Artists</a></li>
+                <li><a href="#">The Developers</a></li>
+                <li><a href="#">Brand</a></li>
+                <li><a href="#">The Supplier</a></li>
+              </ul>
+            </li>
+            <li class="column">
+              <h3>Social connection</h3>
+              <ul class="column-item">
+                <li>
+                  <img src="images/facebook-24.png" alt="Facebook">
+                  <a href="#"><span>Facebook</span></a>
+                </li>
+                <li>
+                  <img src="images/google_plus-24.png" alt="Google+">
+                  <a href="#"><span>Google+</span></a>
+                </li>
+                <li>
+                  <img src="images/youtube-24.png" alt="Youtube">
+                  <a href="#"><span>Youtube</span></a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="copyright-design">
+          <div class="container-footer">
+            <div class="border-copyright-design">
+              <p class="txt-copyright">© 2019 MYMUSIC AB</p>
+              <p class="txt-design">DESIGN BY NHUT</p>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <!-- Model add to playlist -->
+    <div class="modal fade modal-playlist" id="boxAddToPlaylist" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Add song to playlist</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="container-playlists">
+            </div>
+            <div class="container-add-playlist">
+              <form action="" method="post" class="form-create-playlist">
+                <input type="text" class="input-name-playlist" name="namePlaylist">
+                <button type="button" class="btn-create-playlist js-create-playlist" disabled>Create playlist</button>
+              </form>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="js/myjs.js"></script>
+</body>
+
+</html>

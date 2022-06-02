@@ -1,0 +1,167 @@
+article.profile-panel {
+  padding: 5em;
+  text-align: center;
+  font-size: 1.15em;
+}
+
+form.profile-box::after {
+  clear: both;
+  display: block;
+  content: "";
+}
+
+form.profile-box {}
+
+div.box-avatar {
+  float: left;
+  padding: 0.2em;
+  border: 1.5px solid #bbbbbb;
+  border-right: 0;
+  position: relative;
+  border-top-left-radius: 185px;
+  border-bottom-left-radius: 185px;
+}
+
+img.img-avatar {
+  width: 346px;
+  border-radius: 300px;
+}
+
+div.bar-button-avatar {
+  position: absolute;
+  width: 97%;
+  height: 10%;
+  background-color: #cccccc52;
+  top: 79%;
+}
+
+.bus-edit {
+  width: 27%;
+  height: 26%;
+  background-color: #CCCCCC;
+  background-image: url(../../images/Camera-Front.png);
+  background-repeat: no-repeat;
+  background-size: 70px 78px;
+  background-position: center;
+  border-radius: 50px 50px 50px 50px;
+  border: 5px double #EEEEEE;
+  opacity: 0.7;
+  position: absolute;
+  left: 60%;
+  top: 67.7%;
+}
+
+.bus-edit:hover {
+  cursor: pointer;
+  opacity: 1.0;
+}
+
+div.overlay {
+  background-color: rgba(0, 0, 0, .25);
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 3000;
+}
+
+div.modal-wrapper {
+  align-self: center;
+  background-color: rgba(0, 0, 0, .25);
+  border-radius: 2px;
+  padding: 6px;
+  width: 330px;
+}
+
+div.modal-wrapper>div.modal-content {
+  background-color: rgb(255, 255, 255);
+  border-radius: 2px;
+  padding: 24px;
+  position: relative;
+}
+
+a.close {
+  background-color: rgb(204, 204, 204);
+  border-radius: 50%;
+  color: rgb(255, 255, 255);
+  display: block;
+  font-family: 'Varela Round', sans-serif;
+  font-size: .9em;
+  padding: .2em .5em;
+  position: absolute;
+  top: 1.25rem;
+  transition: all 400ms ease;
+  right: 1.25rem;
+}
+
+a.close:hover {
+  background-color: red;
+}
+
+.files {
+  margin-bottom: 5%;
+}
+
+table.profile {
+  float: left;
+  border: 1.5px solid #bbbbbb;
+}
+
+article.profile-panel table tr th {
+  width: 113px;
+  float: left;
+  padding: 0.7em;
+  border: 1px solid #bbbbbb;
+  font-weight: 500;
+}
+
+article.profile-panel table tr td {
+  padding: 0.7em;
+  border: 1px solid #bbbbbb;
+}
+
+button.btn-edit {
+  text-decoration: none;
+  border: 0;
+  background-color: #A0E6FE;
+  border-radius: 3px 3px 3px 3px;
+  box-shadow: inset 0 -15px 30px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
+  font-family: cursive;
+  font-size: 16px;
+  color: #FFFFFF;
+  padding: 3px;
+  padding-top: 0em;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+select.gt {
+  margin-top: 4px;
+  width: 25%;
+  background: #fff;
+  margin-bottom: 1%;
+  border: 1px solid #ccc;
+  padding: 1%;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 95%;
+  color: #555;
+}
+
+.sn {
+  margin-top: 4px;
+  width: 24.6%;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 1%;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 95%;
+  color: #555;
+}
+
+div.nav-btom {
+  padding: 0.8em;
+}

@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="../css/bootstrap.css">
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/_reset.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/account.css">
+  <link rel="stylesheet" href="../css/font-awesome-css/all.css">
+  <link rel="stylesheet" href="../css/sweetalert2.css">
+
+  <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="../js/bootstrap.js"></script>
+  <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../js/jquery.validate.js"></script>
+  <script type="text/javascript" src="../js/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="../js/sweetalert2.js"></script>
+  <script>
+    var idAccount;
+
+    //load html all song
+    function loadTableAccount() {
+      $.ajax({
+        url:'../../Server-API/load-data-page.php',
+        type:'post',
+        data: {
+          select: 'tableAccount'
+        },
+        success:function(response) {
+          $('.content-table').html('');
+          var response = JSON.parse(response);
+          var i = 1;
+          for(var k in response['array_accounts']) {
+            $('.content-table').append('\
+              <tr>\
+                <td>' + i + '</td>\
+                <td>' + response['array_accounts'][k]['id_account'] + '</td>\
+                <td>' + response['array_accounts'][k]['full_name_account'] + '</td>\
+                <td>' + response['array_accounts'][k]['username_account'] + '</td>\
+                <td>' + response['array_accounts'][k]['email_account'] + '</td>\
+                <td>' + response['array_accounts'][k]['user_position'] + '</td>\
+                <td class="button"><span class="btn-edit js-display-edit" data-id="' + response['array_accounts'][k]['id_account'] + '" data-toggle="modal" data-target="#modalEdit">Edit</span></td>\
+                <td class="button"><span class="btn-delete js-action-delete" data-id="' + response['array_accounts'][k]['id_account'] + '">Delete</span></td>\
+                <td class="button"><span class="btn-detail js-action-refesh" data-id="' + response['array_accounts'][k]['id_account'] + '">Refesh</span></td>\
+              </tr>\
+            ');
+            i++;
+          }
+        }
+      });
+    }
+    loadTableAccount();
+
+    $.ajax({
+      url:'../../Server-API/SelectNumberRowTable.php',
+      type:'post',
+      success:function(response) {
+        var response = JSON.parse(response);
+        $('.txt-number').html('Total account: ' + response['numberAccount']);
+      }
+    });
+
+    function loadUserType(idUserType) {
+      $.ajax({
+        url:'../../Server-API/load-data-page.php',
+        type:'post',
+        data: {
+          select: 'formUserType'
+        },
+        success:function(response) {
+          $('.select-user-types').html('');
+          var response = JSON.parse(response);
+          var selected;
+          for(var k in response['array_user_types']) {
+            if (idUserType == response['array_user_types'][k]['id']) {
+              selected = 'selected';
+            } else {
+              selected = '';
+            }
+            $('.select-user-types').append('\
+              <option ' + selected + ' value="' + response['array_user_types'][k]['id'] + '">' + response['array_user_types'][k]['user_position'] + '</option>\
+            ');
+          }
+        }
+      });
+    }
+
+    //change src image by js
+    function readURL(input) {
+      var numFiles = $("input:file")[0].files.length;
+      var images = '.blah0';
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+          reader.onload = function (e) {
+            $('.blah0')
+              .attr('src', e.target.result)
+              .width(118)
+              .height(118);
+          };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    $(document).ready(function () {
+
+      $('#modalEdit').on('hidden.bs.modal', function () {
+        $("form")[0].reset();
+        $('.img-account').attr('src','');
+      })
+
+      $('#modalAdd').on('hidden.bs.modal', function () {
+        $("form")[1].reset();
+        $('.img-account').attr('src','');
+      })
+
+      // handle check error form song
+      $(".form-add-song").validate({
+        errorElement: 'li',
+        rules: {
+          nameSongAdd: "required",
+        },
+        messages: {
+          nameSongAdd: "Enter your name song",
+        },
+        onkeyup: function() {
+          if ($('.form-add-song').valid() == true) {
+            $('.js-btn-add').prop('disabled', false);
+          } else {
+            $('.js-btn-add').prop('disabled', true);
+          }
+        }
+      });
+
+      
+      $(document).on('click','.js-display-edit',function() {
+        idAccount = $(this).attr('data-id');
+        $.ajax({
+          url:'../../Server-API/load-data-page.php',
+          type:'post',
+          data: {
+            select: 'FormEditAccount',
+            idAccount: idAccount
+          },
+          success:function(response) {
+            var response = JSON.parse(response);
+            $('.full-name').val(response['fullName']);
+            $('.username').val(response['username']);
+            $('.email').val(response['email']);
+            $('.img-account').attr('src','../images/account/' + response['image']);
+            loadUserType(response['idUserTypes']);
+          }
+        });
+      });
+
+      $(document).on('click','.js-display-add',function() {
+        loadUserType(0);
+      });
+
+      // handle check error form song
+      $(".form-edit-account").validate({
+        errorElement: 'li',
+        rules: {
+          fullName: "required",
+        },
+        messages: {
+          fullName: "Enter your full name",
+        },
+        onkeyup: function() {
+          if ($('.form-edit-account').valid() == true) {
+            $('.js-btn-edit').prop('disabled', false);
+          } else {
+            $('.js-btn-edit').prop('disabled', true);
+          }
+        }
+      });
+
+      // handle check form create account
+      $.validator.addMethod("validatePassword", function (value, element) {
+        return this.optional(element) || /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/i.test(value);
+      });
+      $(".form-add-account").validate({
+        errorElement: 'li',
+        rules: {
+          fullNameAdd: {
+            required: true,
+          },
+          userNameAdd: {
+            required: true,
+            minlength: 6
+          },
+          passwordAdd: {
+            required: true,
+            validatePassword: true,
+          },
+          cpasswordAdd: {
+            equalTo: ".password-add"
+          },
+          emailAdd: {
+            required: true,
+            email: true
+          }
+        },
+        messages: {
+          fullNameAdd: {
+            required: "Please enter your fullname",
+          },
+          userNameAdd: {
+            required: "Please enter your username",
+            minlength: "Enter your username must be than 6 characters"
+          },
+          passwordAdd: {
+            required: "Please enter your password",
+            validatePassword: "Enter your password must be between 8 and 15 characters and at least one numeric, one uppercase"
+          },
+          cpasswordAdd: "Enter Confirm Password Same as Password",
+          emailAdd: {
+            required: "Please enter your email",
+          }
+        },
+        onkeyup: function() {
+          if ($('.form-add-account').valid() == true) {
+            $('.js-btn-add').prop('disabled', false);
+          } else {
+            $('.js-btn-add').prop('disabled', true);
+          }
+        }
+      });
+
+      //handle btn create playlist
+      $(document).on("click",".js-btn-edit",function() {
+        var fd = new FormData();
+        var filesImage = $('#imgFile')[0].files[0];
+        var fullName = $('.full-name').val();
+        var userType = $('.select-user-types').val();
+        fd.append('idAccount', idAccount);
+        fd.append('file', filesImage);
+        fd.append('fullName', fullName);
+        fd.append('userType', userType);
+        $.ajax({
+          url: '../../Server-API/EditAccount.php',
+          type: 'post',
+          data: fd,
+          contentType: false,
+          processData: false,
+          success: function(response){
+            if (response == 'succesful') {
+              Swal.fire({
+                icon: 'success',
+                title: 'Edit succesful',
+                timer: 8500
+              }).then((result) => {
+                $('#modalEdit').modal('hide');
+                loadTableAccount();
+              })
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: response,
+                timer: 8500
+              }).then((result) => {
+              }) 
+            }
+          },
+        });
+
+      });
+
+      // handle button register
+      $('.js-btn-add').click(function() {
+        var fd = new FormData();
+        var fullName = $('.full-name-add').val();
+        var username = $('.username-add').val();
+        var password = $('.password-add').val();
+        var email = $('.email-add').val();
+        var userType = $('.select-user-types-add').val();
+        var imgFileAdd = $('#imgFileAdd')[0].files[0];
+        fd.append('fullName', fullName);
+        fd.append('username', username);
+        fd.append('password', password);
+        fd.append('email', email);
+        fd.append('userType', userType);
+        fd.append('imgFileAdd', imgFileAdd);
+        $.ajax({
+          url: '../../Server-API/AddNewAccount.php',
+          type: 'post',
+          data: fd,
+          contentType: false,
+          processData: false,
+          success:function (response){
+            response = JSON.parse(response);
+            if (response['status'] == true) {
+              Swal.fire({
+                icon: 'success',
+                title: 'Create succesful!',
+                text: '',
+                showConfirmButton: false,
+                timer: 4500
+              }).then((result) => {
+                $('#modalAdd').modal('hide');
+                loadTableAccount();
+              })
+            } else if (response['status'] == false) {
+              if (response['error-username'] == 'username-existed') {
+                $('.error-form-add').html('<li>Your username was existed</li>');
+              }
+              if (response['error-email'] == 'email-existed') {
+                $('.error-form-add').html('<li>Your email was existed</li>');
+              }
+            }
+          }
+        });
+      });
+
+      $(document).on('click','.js-action-delete',function() {
+        idAccount = $(this).attr('data-id');
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.value) {
+            var idPlaylist = $(this).attr('idPlaylist');
+            $.ajax({
+              url: '../../Server-API/DeleteAccount.php',
+              type: 'post',
+              data: {
+                idAccount: idAccount
+              },
+              success: function(response){
+                console.log(response);
+                if (response == 'succesful') {
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Delete succesful',
+                    timer: 8500
+                  }).then((result) => {
+                    loadTableAccount();
+                  })
+                } else {
+                  Swal.fire({
+                    icon: 'error',
+                    title: response,
+                    timer: 8500
+                  }).then((result) => {
+                  }) 
+                }
+              },
+            });
+          }
+        })
+      });
+
+      $(document).on('click','.js-action-refesh',function() {
+        idAccount = $(this).attr('data-id');
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.value) {
+            var idPlaylist = $(this).attr('idPlaylist');
+            $.ajax({
+              url: '../../Server-API/RefeshPassword.php',
+              type: 'post',
+              data: {
+                idAccount: idAccount
+              },
+              success: function(response){
+                console.log(response);
+                if (response == 'succesful') {
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Refesh password succesful',
+                    timer: 8500
+                  }).then((result) => {
+                    loadTableAccount();
+                  })
+                } else {
+                  Swal.fire({
+                    icon: 'error',
+                    title: response,
+                    timer: 8500
+                  }).then((result) => {
+                  }) 
+                }
+              },
+            });
+          }
+        })
+      });
+
+    });
+  </script>
+  <title>Document</title>
+</head>
+<body>
+  <header class="page-header">
+  </header>
+  <main class="page-main">
+    <div class="main-left">
+    </div>
+    <div class="main-right">
+      <div class="content-main-right">
+        <section class="name-main-right">
+          <div class="title-bar">
+            <div class="title-left">
+              <p class="txt-tile-left">Control Table - Account</p>
+            </div>
+            <div class="title-right">
+              <p class="btn-add js-display-add" data-toggle="modal" data-target="#modalAdd"><i class="fas fa-plus"></i> Add new account</p>
+            </div>
+          </div>
+          <!-- <p class="border-bottom"></p> -->
+        </section>
+        <article>
+            <table class="member">
+                <thead>
+                    <tr>
+                      <th>STT</th>
+                      <th>ID</th>
+                      <th>Full name</th>
+                      <th>Username</th>
+                      <th>Email</th>
+                      <th>User type</th>
+                      <th colspan="3">Edit | Delete | Refesh</th>
+                    </tr>
+                </thead>
+                <tbody class="content-table">
+                </tbody>
+            </table>
+        </article>
+      </div>
+      <div class="bottom-main-right">
+        <div class="nav-btom">
+          <div class="txt-nav-bottom">
+            <b class="txt-number"></b>
+            <span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="page-footer">
+  </footer>
+
+  <!-- Modal view -->
+  <div class="modal fade" id="modalDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Detail </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body main-detail-song">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Edit -->
+  <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title title-model-action" id="exampleModalLongTitle">Edit Song </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body main-edit-song">
+          <form action="" method="post" class="form-edit-account">
+            <input type="text" placeholder="Full name" class="full-name item-form-edit" name="fullName">
+            <input type="text" placeholder="User name" class="username item-form-edit" name="userName" readonly>
+            <input type="text" placeholder="Email" class="email item-form-edit" name="email" readonly>
+            <span>Image:</span>
+            <img class="img-account blah0"  id="blah0" src="" alt="">
+            <input type="file" class="item-form-edit" type="file" id="imgFile" name="imgFile" onchange="readURL(this);">
+            <span>User types: </span>
+            <select name="" id="" class="select-user-types">
+            </select>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary js-btn-edit">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal add -->
+  <div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title title-model-action" id="exampleModalLongTitle">Add New Song </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body main-edit-song">
+          <form action="" method="post" class="form-add-account">
+            <input type="text" placeholder="Full name" class="full-name-add item-form-edit" name="fullNameAdd">
+            <input type="text" placeholder="User name" class="username-add item-form-edit" name="userNameAdd">
+            <input type="password" placeholder="Password" class="password-add item-form-edit" name="passwordAdd">
+            <input type="password" placeholder="Comfirm Password" class="cpassword-add item-form-edit" name="cpasswordAdd">
+            <input type="text" placeholder="Email" class="email-add item-form-edit" name="emailAdd">
+            <span>Image:</span>
+            <img class="img-account blah0"  id="blah0" src="" alt="">
+            <input type="file" class="item-form-edit" type="file" id="imgFileAdd" name="imgFileAdd" onchange="readURL(this);">
+            <span>User types: </span>
+            <select name="selectUserTypes" id="selectUserTypes" class="select-user-types select-user-types-add">
+            </select>
+            <div class="error-form-add"></div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary js-btn-add" disabled>Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="js/myjs.js"></script>
+
+</body>
+</html>

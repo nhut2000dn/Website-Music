@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="../css/bootstrap.css">
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/_reset.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/songs.css">
+  <link rel="stylesheet" href="../css/font-awesome-css/all.css">
+  <link rel="stylesheet" href="../css/sweetalert2.css">
+
+  <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="../js/bootstrap.js"></script>
+  <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../js/jquery.validate.js"></script>
+  <script type="text/javascript" src="../js/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="../js/sweetalert2.js"></script>
+  <script>
+    var idSongEdit;
+
+    //load html all song
+    function loadTableSong() {
+      $.ajax({
+        url:'../../Server-API/load-data-page.php',
+        type:'post',
+        data: {
+          select: 'allSong'
+        },
+        success:function(response) {
+          $('.content-table').html('');
+          var response = JSON.parse(response);
+          var i = 1;
+          for(var k in response['array_songs']) {
+            $('.content-table').append('\
+              <tr>\
+                <td>' + i + '</td>\
+                <td>' + response['array_songs'][k]['id'] + '</td>\
+                <td>' + response['array_songs'][k]['name'] + '</td>\
+                <td>' + response['array_songs'][k]['views'] + '</td>\
+                <td>' + response['array_songs'][k]['dowloads'] + '</td>\
+                <td class="button"><span class="btn-detail js-action-detail" data-id="' + response['array_songs'][k]['id'] + '" data-toggle="modal" data-target="#modalDetail">Detail</span></td>\
+                <td class="button"><span class="btn-edit js-display-edit" data-id="' + response['array_songs'][k]['id'] + '" data-toggle="modal" data-target="#modalEdit">Edit</span></td>\
+                <td class="button"><span class="btn-delete js-action-delete" data-id="' + response['array_songs'][k]['id'] + '">Delete</span></td>\
+              </tr>\
+            ');
+            i++;
+          }
+        }
+      });
+    }
+    loadTableSong();
+
+    $.ajax({
+      url:'../../Server-API/SelectNumberRowTable.php',
+      type:'post',
+      success:function(response) {
+        var response = JSON.parse(response);
+        $('.txt-number').html('Total song: ' + response['numberSong']);
+      }
+    });
+
+    //change src image by js
+    function readURL(input) {
+      var numFiles = $("input:file")[0].files.length;
+      var images = '.blah0';
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+          reader.onload = function (e) {
+            $('.blah0')
+              .attr('src', e.target.result)
+              .width(118)
+              .height(118);
+          };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    function formSong(idArtist, idAccount, idCountry) {
+      //load html form song
+      $.ajax({
+        url:'../../Server-API/load-data-page.php',
+        type:'post',
+        data: {
+          select: 'formSong'
+        },
+        success:function(response) {
+          $('.select-artist').html('');
+          var response = JSON.parse(response);
+          var selected;
+          for(var k in response['array_artists']) {
+            if (response['array_artists'][k]['id'] == idArtist) {
+              selected = 'selected';
+            } else {
+              selected = '';              
+            }
+            $('.select-artist').append('\
+              <option '+ selected +' value="' + response['array_artists'][k]['id'] + '">' + response['array_artists'][k]['name'] + '</option>\
+            ');
+          }
+          for(var k in response['array_accounts']) {
+            if (response['array_accounts'][k]['id'] == idAccount) {
+              selected = 'selected';
+            } else {
+              selected = '';              
+            }
+            $('.select-account').append('\
+              <option '+ selected +' value="' + response['array_accounts'][k]['id'] + '">' + response['array_accounts'][k]['username'] + '</option>\
+            ');
+          }
+          for(var k in response['array_countrys']) {
+            if (response['array_countrys'][k]['id'] == idCountry) {
+              selected = 'selected';
+            } else {
+              selected = '';              
+            }
+            $('.select-country').append('\
+              <option '+ selected +' value="' + response['array_countrys'][k]['id'] + '">' + response['array_countrys'][k]['name'] + '</option>\
+            ');
+          }
+        }
+      });
+    }
+
+    $(document).ready(function () {
+
+      $('#modalEdit').on('hidden.bs.modal', function () {
+        $("form")[0].reset();
+      })
+
+      $('#modalAdd').on('hidden.bs.modal', function () {
+        $("form")[1].reset();
+      })
+
+      $(document).on('click','.js-action-detail',function() {
+        idSong = $(this).attr('data-id');
+        $.ajax({
+          url:'../../Server-API/load-data-page.php',
+          type:'post',
+          data: {
+            select: 'DetailSong',
+            idSong: idSong
+          },
+          success:function(response) {
+            var response = JSON.parse(response);
+            $('.main-detail-song').html('\
+              <table class="table-detail-song">\
+                <tr class="item-detail">\
+                  <th><span class="name-item">Id :</span></th>\
+                  <td>' + response['idSong'] + '</td>\
+                </tr>\
+                <tr class="item-detail">\
+                  <th><span class="name-item">Name:</span></th>\
+                  <td>' + response['nameSong'] + '</td>\
+                </tr>\
+                <tr class="item-detail">\
+                  <th><span class="name-item">Url Name:</span></th>\
+                  <td>' + response['urlNameSong'] + '</td>\
+                </tr>\
+                <tr class="item-detail">\
+                  <th><span class="name-item">Image:</span></th>\
+                  <td><image src="../images/songs/' + response['imageSong'] + '" class="img-song"></td>\
+                </tr>\
+                <tr class="item-detail">\
+                  <th><span class="name-item">Audio:</span></th>\
+                  <td>\
+                    <audio controls id="myAudio">\
+                      <source src="../audio/' + response['audioSong'] + '" type="audio/mpeg">\
+                    </audio></li>\
+                  </td>\
+                </tr>\
+                <tr class="item-detail">\
+                  <th><span class="name-item">Views:</span></th>\
+                  <td>' + response['viewsSong'] + '</td>\
+                </tr>\
+                <tr class="item-detail">\
+                  <th><span class="name-item">Dowloads:</span></th>\
+                  <td>' + response['dowloadsSong'] + '</td>\
+                </tr>\
+                <tr class="item-detail">\
+                  <th><span class="name-item">Artist:</span></th>\
+                  <td>' + response['nameArtist'] + '</td>\
+                </tr>\
+                <tr class="item-detail">\
+                  <th><span class="name-item">Uploads by:</span></th>\
+                  <td>' + response['usernameAccount'] + '</td>\
+                </tr>\
+                <tr class="item-detail">\
+                  <th><span class="name-item">Country:</span></th>\
+                  <td>' + response['nameCountry'] + '</td>\
+                </tr>\
+              </table>\
+            ');
+          }
+        });
+      });
+
+      $(document).on('click','.js-display-edit',function() {
+        idSong = $(this).attr('data-id');
+        idSongEdit = idSong;
+        $.ajax({
+          url:'../../Server-API/load-data-page.php',
+          type:'post',
+          data: {
+            select: 'DetailSong',
+            idSong: idSong
+          },
+          success:function(response) {
+            var response = JSON.parse(response);
+            $('.name-song').val(response['nameSong']);
+            if (response['imageSong']) {
+              $('.img-song').attr('src','../images/songs/' + response['imageSong']);
+              $('.views-song').val(response['viewsSong']);
+              $('.dowloads-song').val(response['dowloadsSong']);
+              formSong(response['idArtist'], response['idAccount'], response['idCountry']);
+            }
+          }
+        });
+      });
+
+      $(document).on('click','.js-display-add',function() {
+        formSong(0, 0, 0);
+        $('.img-song').attr('src','');
+      });
+
+      // handle check error form song
+      $(".form-edit-song").validate({
+        errorElement: 'li',
+        rules: {
+          nameSong: "required",
+        },
+        messages: {
+          nameSong: "Enter your name song",
+        },
+        onkeyup: function() {
+          if ($('.form-edit-song').valid() == true) {
+            $('.js-btn-edit').prop('disabled', false);
+          } else {
+            $('.js-btn-edit').prop('disabled', true);
+          }
+        }
+      });
+
+      // handle check error form song
+      $(".form-add-song").validate({
+        errorElement: 'li',
+        rules: {
+          nameSongAdd: "required",
+        },
+        messages: {
+          nameSongAdd: "Enter your name song",
+        },
+        onkeyup: function() {
+          if ($('.form-add-song').valid() == true) {
+            $('.js-btn-add').prop('disabled', false);
+          } else {
+            $('.js-btn-add').prop('disabled', true);
+          }
+        }
+      });
+
+      $(document).on('click','.js-btn-edit',function() {
+        var fd = new FormData();
+        var filesImage = $('#imgFile')[0].files[0];
+        var filesAudio = $('#audioFile')[0].files[0];
+        var nameSong = $('.name-song').val();
+        var viewsSong = $('.views-song').val();
+        var dowloadsSong = $('.dowloads-song').val();
+        var idArtist = $('.select-artist').val();
+        var idAccount = $('.select-account').val();
+        var idCountry = $('.select-country').val();
+        fd.append('idSong', idSongEdit);
+        fd.append('fileImage', filesImage);
+        fd.append('fileAudio', filesAudio);
+        fd.append('nameSong', nameSong);
+        fd.append('viewsSong', viewsSong);
+        fd.append('dowloadsSong', dowloadsSong);
+        fd.append('idArtist', idArtist);
+        fd.append('idAccount', idAccount);
+        fd.append('idCountry', idCountry);
+        $.ajax({
+          url: '../../Server-API/EditSong.php',
+          type: 'post',
+          data: fd,
+          contentType: false,
+          processData: false,
+          success: function(response){
+            console.log(response);
+            if (response == 'succesful') {
+              Swal.fire({
+                icon: 'success',
+                title: 'Edit succesful',
+                timer: 8500
+              }).then((result) => {
+                $('#modalEdit').modal('hide');
+                loadTableSong();
+              })
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: response,
+                timer: 8500
+              }).then((result) => {
+              }) 
+            }
+          },
+        });
+      });
+
+      $(document).on('click','.js-btn-add',function() {
+        var fd = new FormData();
+        var filesImage = $('#imgFileAdd')[0].files[0];
+        var filesAudio = $('#audioFileAdd')[0].files[0];
+        var nameSong = $('.name-song-add').val();
+        var idArtist = $('.select-artist-add').val();
+        var idAccount = $('.select-account-add').val();
+        var idCountry = $('.select-country-add').val();
+        fd.append('fileImage', filesImage);
+        fd.append('fileAudio', filesAudio);
+        fd.append('nameSong', nameSong);
+        fd.append('idArtist', idArtist);
+        fd.append('idAccount', idAccount);
+        fd.append('idCountry', idCountry);
+        $.ajax({
+          url: '../../Server-API/AddNewSong.php',
+          type: 'post',
+          data: fd,
+          contentType: false,
+          processData: false,
+          success: function(response){
+            console.log(response);
+            if (response == 'succesful') {
+              Swal.fire({
+                icon: 'success',
+                title: 'Add succesful',
+                timer: 8500
+              }).then((result) => {
+                $('#modalAdd').modal('hide');
+                loadTableSong();
+              })
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: response,
+                timer: 8500
+              }).then((result) => {
+              }) 
+            }
+          },
+        });
+      });
+
+      $(document).on('click','.js-action-delete',function() {
+        idSong = $(this).attr('data-id');
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.value) {
+            var idPlaylist = $(this).attr('idPlaylist');
+            $.ajax({
+              url: '../../Server-API/DeleteSong.php',
+              type: 'post',
+              data: {
+                idSong: idSong
+              },
+              success: function(response){
+                console.log(response);
+                if (response == 'succesful') {
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Delete succesful',
+                    timer: 8500
+                  }).then((result) => {
+                    loadTableSong();
+                  })
+                } else {
+                  Swal.fire({
+                    icon: 'error',
+                    title: response,
+                    timer: 8500
+                  }).then((result) => {
+                  }) 
+                }
+              },
+            });
+          }
+        })
+      });
+
+    });
+  </script>
+  <title>Document</title>
+</head>
+<body>
+  <header class="page-header">
+  </header>
+  <main class="page-main">
+    <div class="main-left">
+    </div>
+    <div class="main-right">
+      <div class="content-main-right">
+        <section class="name-main-right">
+          <div class="title-bar">
+            <div class="title-left">
+              <p class="txt-tile-left">Control Table - Songs</p>
+            </div>
+            <div class="title-right">
+              <p class="btn-add js-display-add" data-toggle="modal" data-target="#modalAdd"><i class="fas fa-plus"></i> Add new song</p>
+            </div>
+          </div>
+          <!-- <p class="border-bottom"></p> -->
+        </section>
+        <article>
+            <table class="member">
+                <thead>
+                    <tr>
+                      <th>STT</th>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Views</th>
+                      <th>Dowloads</th>
+                      <th colspan="3">Play | Edit | Delete</th>
+                    </tr>
+                </thead>
+                <tbody class="content-table">
+                </tbody>
+            </table>
+        </article>
+      </div>
+      <div class="bottom-main-right">
+        <div class="nav-btom">
+          <div class="txt-nav-bottom">
+            <b class="txt-number">Tổng cộng số Đồ Chơi : </b>
+            <span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="page-footer">
+  </footer>
+
+  <!-- Modal view -->
+  <div class="modal fade" id="modalDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Detail </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body main-detail-song">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Edit -->
+  <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title title-model-action" id="exampleModalLongTitle">Edit Song </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body main-edit-song">
+          <form action="" method="post" class="form-edit-song">
+            <input type="text" placeholder="Name song" class="name-song item-form-edit" name="nameSong">
+            <span>Image:</span>
+            <img class="img-song blah0"  id="blah0" src="" alt="">
+            <input type="file" class="item-form-edit" type="file" id="imgFile" name="imgFile" onchange="readURL(this);">
+            <span>Audio: <input type="file" id="audioFile" class="audio-song item-form-edit" name="audioFile"></span>
+            <span>Views:</span>
+            <input type="number" placeholder="Views song" class="views-song item-form-edit" name="viewsSong">
+            <span>Dowloads:</span>
+            <input type="number" placeholder="Dowloads song" class="dowloads-song item-form-edit" name="dowloadsSong">
+            <span>Artist: </span>
+            <select name="" id="" class="select-artist">
+            </select>
+            <span>Upload by: </span>
+            <select name="" id="" class="select-account">
+            </select>
+            <span>Country: </span>
+            <select name="" id="" class="select-country">
+            </select>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary js-btn-edit">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal add -->
+  <div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title title-model-action" id="exampleModalLongTitle">Add Song </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body main-edit-song">
+          <form action="" method="post" class="form-add-song">
+            <input type="text" placeholder="Name song" class="name-song-add item-form-edit" name="nameSongAdd">
+            <span>Image:</span>
+            <img class="img-song blah0"  id="blah0" src="" alt="">
+            <input type="file" class="item-form-edit" type="file" id="imgFileAdd" name="imgFileAdd" onchange="readURL(this);">
+            <span>Audio: <input type="file" id="audioFileAdd" class="audio-song item-form-edit" name="audioFileAdd"></span>
+            <span>Artist: </span>
+            <select name="" id="" class="select-artist select-artist-add">
+            </select>
+            <span>Upload by: </span>
+            <select name="" id="" class="select-account select-account-add">
+            </select>
+            <span>Country: </span>
+            <select name="" id="" class="select-country select-country-add">
+            </select>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary js-btn-add" disabled>Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="js/myjs.js"></script>
+
+</body>
+</html>

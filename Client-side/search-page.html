@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/_reset.css">
+  <link rel="stylesheet" href="css/mycss.css">
+  <link rel="stylesheet" href="css/top100-music.css">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/font-awesome-css/all.css">
+  <link rel="stylesheet" href="css/sweetalert2.css">
+
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/jquery.validate.js"></script>
+  <script type="text/javascript" src="js/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="js/sweetalert2.js"></script>
+  <script>
+    var nameSong;
+    var pathname = $(location).attr("href");
+    var url = new URL(pathname);
+
+    //check url idPlaylist
+    nameSong = url.searchParams.get("nameSong");
+    if (!nameSong) {
+      window.location.href = "index.html";
+    }
+
+    //load html header footer
+    $.ajax({
+      url:'../Server-API/load-data-page.php',
+      type:'post',
+      data: {
+        select: 'menu',
+        idAccount: localStorage.getItem("idAccount")
+      },
+      success:function(response) {
+        var response = JSON.parse(response);
+        var dataItemCountry = '';
+        var htmlBoxUser = '';
+        var htmlDropDownUser = '';
+        for (var k in response['array-country']) {
+          dataItemCountry += '<a href="top100-music.html?idCountry=' + response['array-country'][k]['id'] + '"> ' + response['array-country'][k]['name'] + ' </a>';
+        }
+        if(!response['image']) {
+          image_account = 'no-avatar.jpg';
+        } else {
+          image_account = response['image'];
+        }
+        if (localStorage.getItem("idAccount") != null) {
+          htmlBoxUser = '<img src="images/account/'+image_account+'" alt="Zing MP3" class="icon-user">';
+          htmlDropDownUser = '\
+            <a href="user-function.html?type=playlist"><li class="item-drop-down-user">Personal page</li></a>\
+            <a href="user-function.html?type=profile"><li class="item-drop-down-user">Profile</li></a>\
+            <a class="js-btn-logout"><li class="item-drop-down-user">Logout</li></a>\
+          ';
+        } else {
+          htmlBoxUser = '<i class="far fa-user"></i>';
+          htmlDropDownUser = '\
+            <a href="auth.html#login"><li class="item-drop-down-user">Login</li></a>\
+            <a href="auth.html#register"><li class="item-drop-down-user">Register</li></a>\
+          ';
+        }
+        $('header').html('\
+          <div class="container-header">\
+            <nav class="navbar-collapse">\
+              <div class="navbar-left">\
+                <a href="index.html"><img src="images/LOGO.png" alt="" class="logo"></a>\
+              </div>\
+              <div class="navbar-center">\
+                <a href="index.html" class="item-menu">Home</a>\
+                <a href="artist.html" class="item-menu">Artist</a>\
+                <div class="navbar-container">\
+                  <div class="dropdown-item-header">\
+                    <button class="dropbtn">Top 100\
+                    </button>\
+                    <div class="dropdown-content">\
+                      <div class="row-content">\
+                        <div class="column-dropdown">\
+                        ' + dataItemCountry + '\
+                        </div>\
+                      </div>\
+                    </div>\
+                  </div>\
+                </div>\
+                <a href="playlist.html" class="item-menu">PlayList</a>\
+                <form class="input-search">\
+                  <span class="input-search-prepend">\
+                    <button type="button" class="button-seach">\
+                      <svg class="feather feather-search" width="16" height="16" viewBox="0 0 24 24" fill="none"\
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">\
+                        <circle cx="11" cy="11" r="8"></circle>\
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>\
+                      </svg>\
+                    </button>\
+                  </span>\
+                  <span class="twitter-typeahead">\
+                    <input type="text" class="form-input-search" placeholder="Search..." autocomplete="off"\
+                      spellcheck="false" dir="auto">\
+                  </span>\
+                </form>\
+              </div>\
+              <div class="navbar-right">\
+                <div class="container-user">\
+                  <div class="box-user">\
+                    ' + htmlBoxUser + '\
+                  </div>\
+                  <div class="drop-down-user">\
+                    <ul class="box-drop-down-user">\
+                    ' + htmlDropDownUser + '\
+                    </ul>\
+                  </div>\
+                </div>\
+                <div class="btn-action">\
+                  <i class="fas fa-bars"></i>\
+                </div>\
+              </div>\
+            </nav>\
+            <div class="box-action">\
+              <a href="index.html">\
+                <div class="dropdown-item-header">\
+                  <button class="dropbtn">Home\
+                  </button>\
+                </div>\
+              </a>\
+              <a href="artist.html">\
+              <div class="dropdown-item-header">\
+                <button class="dropbtn">Artist\
+                </button>\
+              </div>\
+              </a>\
+              <div class="navbar-header">\
+                <div class="dropdown-item-header">\
+                  <button class="dropbtn">Top 100\
+                  </button>\
+                  <div class="dropdown-content">\
+                    <div class="row-content">\
+                      <div class="column-dropdown">\
+                        ' + dataItemCountry + '\
+                      </div>\
+                    </div>\
+                  </div>\
+                </div>\
+                <a href="playlist.html">\
+                  <div class="dropdown-item-header">\
+                    <button class="dropbtn">PlayList\
+                    </button>\
+                  </div>\
+                </a>\
+                <a href="playlist.html">\
+                  <div class="dropdown-item-header">\
+                    <button class="dropbtn">PlayList\
+                    </button>\
+                  </div>\
+                </a>\
+              </div>\
+              <form class="input-search">\
+                <span class="input-search-prepend">\
+                  <button type="button" class="button-seach">\
+                    <svg class="feather feather-search" width="16" height="16" viewBox="0 0 24 24" fill="none"\
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">\
+                      <circle cx="11" cy="11" r="8"></circle>\
+                      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>\
+                    </svg>\
+                  </button>\
+                </span>\
+                <span class="twitter-typeahead">\
+                  <input type="text" class="form-input-search" placeholder="Search..." autocomplete="off"\
+                    spellcheck="false" dir="auto">\
+                </span>\
+              </form>\
+            </div>\
+          </div>\
+        ');
+      }
+    });
+
+    //load html top 100 country
+    $.ajax({
+      url:'../Server-API/load-data-page.php',
+      type:'post',
+      data: {
+        select: 'country'
+      },
+      success:function(response) {
+        var response = JSON.parse(response);
+        for(var k in response['array-top_100']) {
+          $('.container-top100-right').append('\
+            <div class="col-music-next margin-top">\
+              <div class="box-img-top100">\
+                <a href="play-top100.html?idCountry=' + response['array-top_100'][k]['id'] + '">\
+                  <img src="images/country/' + response['array-top_100'][k]['image'] + '" alt="" class="img-music-top100">\
+                  <button class="btn-play btn-play-top100" tabindex="0">\
+                  </button>\
+                </a>\
+              </div>\
+              <div class="name-music-next">\
+                <a href="play-top100.html?idCountry=' + response['array-top_100'][k]['id'] + '">\
+                  <div>Top 100 Best Song Of ' + response['array-top_100'][k]['name'] + '</div>\
+                </a>\
+              </div>\
+            </div>\
+          ');
+        }
+      }
+    });
+
+    // load top100 song 
+    $.ajax({
+      url:'../Server-API/SearchSong.php',
+      type:'post',
+      data: {
+        nameSong: nameSong
+      },
+      success:function(response) {
+        var i = 1;
+        var response = JSON.parse(response);
+        $('.container-item-top100').html('');
+        $('.txt-title-left').html('Search song: ' + nameSong);
+        $('.txt-title-right').html('0 result');
+        for(var k in response['array_search']) {
+          $('.container-item-top100').append('\
+            <div class="box-item-top100">\
+              <div class="row-item-top100">\
+                <span> ' + i + ' </span>\
+              </div>\
+              <div class="img-item-top100">\
+                <a href="play-music.html?idSong=' + response['array_search'][k]['id_song'] + '">\
+                  <img src="images/songs/' + response['array_search'][k]['image_song'] + '" alt="">\
+                </a>\
+              </div>\
+              <div class="information-item-top100">\
+                <span class="txt-song"><a href="play-music.html?idSong=' + response['array_search'][k]['id_song'] + '">' + response['array_search'][k]['name_song'] + '</span>\
+                <span class="txt-artist">' + response['array_search'][k]['name_artist'] + '</span>\
+              </div>\
+              <div class="box-action-top100">\
+                <div class="btn-listen-song">\
+                  <a href="play-music.html?idSong=' + response['array_search'][k]['id_song'] + '"><i class="fas fa-play"></i></a>\
+                </div>\
+                <div class="btn-dowloads-song">\
+                  <a href="audio/' + response['array_search'][k]['audio_song'] + '" download="Close To The Sun.mp3" class="link-dowload">\
+                    <i class="fas fa-download"></i>\
+                  </a>\
+                </div>\
+                <div class="btn-add-to-playlist">\
+                  <i class="far fa-heart"></i>\
+                </div>\
+              </div>\
+            </div>\
+          ');
+          i++;
+          $('.txt-title-right').html((i - 1) + ' result');
+        }
+      }
+    });
+
+    $(document).ready(function () {
+      //handle btn logout
+      $(document).on("click", ".js-btn-logout", function () {
+        localStorage.removeItem("idAccount");
+        Swal.fire({
+          icon: 'success',
+          title: 'Logout succesful',
+          timer: 8500
+        }).then((result) => {
+          location.reload();
+        })
+      });
+
+      //handle action menu responsive
+      function btnActionMenu() {
+        var boxAction = document.getElementsByClassName("box-action")[0];
+        $('.btn-action').click(function () {
+          if (boxAction.style.display == "block") {
+            boxAction.style.display = "none";
+          } else {
+            boxAction.style.display = "block";
+          }
+        });
+      }
+      btnActionMenu();
+
+      $(document).on("click",".button-seach",function() {
+        if (($('.form-input-search').val()) != '') {
+          window.location.href = "search-page.html?nameSong=" + $('.form-input-search').val();
+        }
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <!-- header page -->
+    <header class="navbar-header">
+    </header>
+
+    <!-- main page -->
+    <section>
+      <div class="main-page">
+        <div class="padding-page">
+          <div class="box-background slidess">
+            <div class="background background1"></div>
+          </div>
+          <div class="box-background slidess">
+            <div class="background background2"></div>
+          </div>
+          <div class="box-background slidess">
+            <div class="background background3"></div>
+          </div>
+          <div class="slideshow-container">
+            <div class="mySlides">
+              <h2>Amazing songs</h2>
+              <div class="box-text-slides">
+                <p>Tortor tristique in ut non mauris quam nibh mi at diam mauris
+                  iaculis lobortis mauris pretium odio elementum felis nunc</p>
+              </div>
+              <a href="" class="btn-explore">Explore</a>
+            </div>
+            <div class="mySlides">
+              <h2>Bepop top charts</h2>
+              <div class="box-text-slides">
+                <p>Tellus urna eu tincidunt massa venenatis aenean arcu turpis rhoncus
+                  porttitor sed molestie ac arcu integer blandit diam neque diam</p>
+              </div>
+              <a href="" class="btn-explore">Explore</a>
+            </div>
+            <div class="mySlides">
+              <h2>Find popular artist</h2>
+              <div class="box-text-slides">
+                <p>TTellus urna eu tincidunt massa venenatis aenean arcu turpis rhoncus
+                  porttitor sed molestie ac arcu integer blandit diam neque diam</p>
+              </div>
+              <a href="" class="btn-explore">Explore</a>
+            </div>
+          </div>
+          <div style="text-align:center;position: relative;">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+          </div>
+        </div>
+
+        <div class="container-top100">
+          <div class="top100-left">
+            <div class="title-left">
+              <span class="txt-title-left">Search song: 'Choir'</span>
+              <span class="txt-title-right"></span>
+            </div>
+            <div class="container-item-top100">
+              <div class="box-item-top100">
+                <div class="row-item-top100">
+                  <span> 1 </span>
+                </div>
+                <div class="img-item-top100">
+                  <a href="">
+                    <img src="images/songs/Choir.jpg" alt="">
+                  </a>
+                </div>
+                <div class="information-item-top100">
+                  <span class="txt-song"><a href="">Choir</span>
+                  <span class="txt-artist">Alan walker</span>
+                </div>
+                <div class="box-action-top100">
+                  <div class="btn-listen-song">
+                    <a href=""><i class="fas fa-play"></i></a>
+                  </div>
+                  <div class="btn-dowloads-song">
+                    <a href="audio/" download="Close To The Sun.mp3" class="link-dowload">
+                      <i class="fas fa-download"></i>
+                    </a>
+                  </div>
+                  <div class="btn-add-to-playlist">
+                    <i class="far fa-heart"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="top100-right">
+            <div class="box-top-100">
+              <div class="heading-right-top100">
+                <span>Top 100</span>
+              </div>
+              <div class="container-top100-right"></div>
+            </div>
+          </div>
+        </div>
+    </section>
+
+    <!-- footer page -->
+    <footer class="page-footer">
+    </footer>
+  </div>
+  <script src="js/myjs.js"></script>
+  <script>
+    //load html footer
+    $('.page-footer').html('\
+      <div class="container-footer">\
+        <ul class="navigation-footer uppercase">\
+          <li class="column">\
+            <h3>About us</h3>\
+            <ul class="column-item">\
+              <li><a href="#">About MYMUSIC</a></li>\
+              <li><a href="#">For the Record</a></li>\
+              <li><a href="#">Friendly Links</a></li>\
+            </ul>\
+          </li>\
+          <li class="column">\
+            <h3>Community</h3>\
+            <ul class="column-item">\
+              <li><a href="#">For Artists</a></li>\
+              <li><a href="#">The Developers</a></li>\
+              <li><a href="#">Brand</a></li>\
+              <li><a href="#">The Supplier</a></li>\
+            </ul>\
+          </li>\
+          <li class="column">\
+            <h3>Social connection</h3>\
+            <ul class="column-item">\
+              <li>\
+                <img src="images/facebook-24.png" alt="Facebook">\
+                <a href="#"><span>Facebook</span></a>\
+              </li>\
+              <li>\
+                <img src="images/google_plus-24.png" alt="Google+">\
+                <a href="#"><span>Google+</span></a>\
+              </li>\
+              <li>\
+                <img src="images/youtube-24.png" alt="Youtube">\
+                <a href="#"><span>Youtube</span></a>\
+              </li>\
+            </ul>\
+          </li>\
+        </ul>\
+      </div>\
+      <div class="copyright-design">\
+        <div class="container-footer">\
+          <div class="border-copyright-design">\
+            <p class="txt-copyright">© 2019 MYMUSIC AB</p>\
+            <p class="txt-design">DESIGN BY NHUT</p>\
+          </div>\
+        </div>\
+      </div>\
+    ');
+  </script>
+</body>
+
+</html>

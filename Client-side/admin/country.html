@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="../css/bootstrap.css">
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/_reset.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/country.css">
+  <link rel="stylesheet" href="../css/font-awesome-css/all.css">
+  <link rel="stylesheet" href="../css/sweetalert2.css">
+
+  <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="../js/bootstrap.js"></script>
+  <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../js/jquery.validate.js"></script>
+  <script type="text/javascript" src="../js/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="../js/sweetalert2.js"></script>
+  <script>
+    var idAccount;
+
+    //load html all song
+    function loadTableAccount() {
+      $.ajax({
+        url:'../../Server-API/load-data-page.php',
+        type:'post',
+        data: {
+          select: 'tableCountry'
+        },
+        success:function(response) {
+          $('.content-table').html('');
+          var response = JSON.parse(response);
+          var i = 1;
+          for(var k in response['array_country']) {
+            $('.content-table').append('\
+              <tr>\
+                <td>' + i + '</td>\
+                <td>' + response['array_country'][k]['id'] + '</td>\
+                <td>' + response['array_country'][k]['name'] + '</td>\
+                <td>' + response['array_country'][k]['url_name'] + '</td>\
+                <td><img src="../images/country/' + response['array_country'][k]['image'] + '" class="img-country"></td>\
+                <td class="button"><span class="btn-edit js-display-edit" data-id="' + response['array_country'][k]['id'] + '" data-toggle="modal" data-target="#modalEdit">Edit</span></td>\
+                <td class="button"><span class="btn-delete js-action-delete" data-id="' + response['array_country'][k]['id'] + '">Delete</span></td>\
+              </tr>\
+            ');
+            i++;
+          }
+        }
+      });
+    }
+    loadTableAccount();
+
+    $.ajax({
+      url:'../../Server-API/SelectNumberRowTable.php',
+      type:'post',
+      success:function(response) {
+        var response = JSON.parse(response);
+        $('.txt-number').html('Total country: ' + response['numberCountry']);
+      }
+    });
+
+
+    //change src image by js
+    function readURL(input) {
+      var numFiles = $("input:file")[0].files.length;
+      var images = '.blah0';
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+          reader.onload = function (e) {
+            $('.blah0')
+              .attr('src', e.target.result)
+              .width(118)
+              .height(118);
+          };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    $(document).ready(function () {
+
+      $('#modalEdit').on('hidden.bs.modal', function () {
+        $("form")[0].reset();
+        $('.img-country-form').attr('src','');
+      })
+
+      $('#modalAdd').on('hidden.bs.modal', function () {
+        $("form")[1].reset();
+        $('.img-country-form').attr('src','');
+      })
+
+      $(document).on('click','.js-display-edit',function() {
+        idCountry = $(this).attr('data-id');
+        $.ajax({
+          url:'../../Server-API/load-data-page.php',
+          type:'post',
+          data: {
+            select: 'FormEditCountry',
+            idCountry: idCountry
+          },
+          success:function(response) {
+            var response = JSON.parse(response);
+            $('.name-country-edit').val(response['name']);
+            $('.img-country-form').attr('src','../images/country/' + response['image']);
+          }
+        });
+      });
+    });
+  </script>
+  <title>Document</title>
+</head>
+<body>
+  <header class="page-header">
+  </header>
+  <main class="page-main">
+    <div class="main-left">
+    </div>
+    <div class="main-right">
+      <div class="content-main-right">
+        <section class="name-main-right">
+          <div class="title-bar">
+            <div class="title-left">
+              <p class="txt-tile-left">Control Table - Country</p>
+            </div>
+            <div class="title-right">
+              <p class="btn-add js-display-add" data-toggle="modal" data-target="#modalAdd"><i class="fas fa-plus"></i> Add new country</p>
+            </div>
+          </div>
+          <!-- <p class="border-bottom"></p> -->
+        </section>
+        <article>
+            <table class="member">
+                <thead>
+                    <tr>
+                      <th>STT</th>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Url Name</th>
+                      <th>Image</th>
+                      <th colspan="3">Edit | Delete</th>
+                    </tr>
+                </thead>
+                <tbody class="content-table">
+                </tbody>
+            </table>
+        </article>
+      </div>
+      <div class="bottom-main-right">
+        <div class="nav-btom">
+          <div class="txt-nav-bottom">
+            <b class="txt-number"></b>
+            <span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="page-footer">
+  </footer>
+
+  <!-- Modal Edit -->
+  <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title title-model-action" id="exampleModalLongTitle">Edit Song </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body main-edit-song">
+          <form action="" method="post" class="form-edit-account">
+            <input type="text" placeholder="Name Country" class="name-country-edit item-form-edit" name="nameCountryEdit">
+            <span>Image:</span>
+            <img class="img-country-form blah0"  id="blah0" src="" alt="">
+            <input type="file" class="item-form-add" type="file" id="imgFileEdit" name="imgFileEdit" onchange="readURL(this);">
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary js-btn-edit">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal add -->
+  <div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title title-model-action" id="exampleModalLongTitle">Add New Song </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body main-edit-song">
+          <form action="" method="post" class="form-add-account">
+            <input type="text" placeholder="Name country" class="name-country-add item-form-edit" name="nameCountryAdd">
+            <span>Image:</span>
+            <img class="img-country-form blah0"  id="blah0" src="" alt="">
+            <input type="file" class="item-form-edit" type="file" id="imgFileAdd" name="imgFileAdd" onchange="readURL(this);">
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary js-btn-add" disabled>Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="js/myjs.js"></script>
+
+</body>
+</html>

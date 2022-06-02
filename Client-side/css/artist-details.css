@@ -1,0 +1,111 @@
+div.main-artist {
+  margin-top: 15em;
+}
+
+div.container-main-songs {
+  margin-top: 3em;
+}
+
+div.container-main-songs::after {
+  clear: both;
+  content: "";
+  display: block;
+}
+
+div.container-artist::after {
+  clear: both;
+  content: "";
+  display: block;
+}
+
+div.artist-left {
+  float: left;
+  width: 18%;
+}
+
+div.artist-right {
+  float: left;
+  margin-left: 2em;
+  width: 74%;
+}
+
+div.container-img-artist {
+  width: 100%;
+}
+
+div.container-img-artist img {
+  width: 100%;
+}
+
+div.container-information-artist {
+
+}
+
+p.name-artist {
+  font-size: 31px;
+}
+
+div.container-item-song {
+  margin-top: 2em;
+}
+
+div.btn-listen-song a {
+  display: block;
+}
+
+/* div.title-left {
+  width: 100%;
+  font-size: 1.8em;
+  background-color: transparent;
+  padding: 0.5em;
+  color: white;
+  border-bottom: 1px solid #2f2c2c;
+} */
+
+div.top100-right {
+  float: right;
+  width: 28%;
+}
+
+div.box-title p {
+  width: 100%;
+  font-size: 1.2em;
+  background-color: #2d2d2d;
+  padding: 0.5em;
+}
+
+div.container-item-artist::after {
+  clear: both;
+  content: "";
+  display: block;
+}
+
+div.box-item-artist {
+  width: 49%;
+  margin-bottom: 2%;
+  float: left;
+  position: relative;
+}
+
+div.box-item-artist:nth-child(odd) {
+  margin-right: 2%;
+}
+
+div.box-item-artist img {
+  width: 100%;
+}
+
+div.box-item-artist:hover img {
+  opacity: 0.3;
+}
+
+div.box-item-artist p.name-artist {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1em;
+  width: 100%;
+  text-align: center;
+  color: #ececec;
+}
